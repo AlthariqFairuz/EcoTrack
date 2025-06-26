@@ -1,4 +1,3 @@
-// app/(tabs)/index.tsx
 import { StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
@@ -25,7 +24,7 @@ export default function DashboardScreen() {
     });
     
     setTimeout(() => {
-      router.replace('/(onboarding)/splash');
+      router.replace('/(auth)/login');
     }, 1000);
   };
 

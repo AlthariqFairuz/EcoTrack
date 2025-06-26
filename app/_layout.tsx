@@ -10,7 +10,6 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   
   const [loaded] = useFonts({
@@ -24,20 +23,15 @@ export default function RootLayout() {
 
   const checkAppState = async () => {
     try {
-      const seenOnboarding = await AsyncStorage.getItem('hasSeenOnboarding');
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
-      console.log('Onboarding:', seenOnboarding, 'Logged In:', loggedIn);
-      
-      setHasSeenOnboarding(seenOnboarding === 'true');
       setIsLoggedIn(loggedIn === 'true');
     } catch (error) {
-      setHasSeenOnboarding(false);
       setIsLoggedIn(false);
       console.error('Error checking app state:', error);
     }
   };
 
-  if (!loaded || hasSeenOnboarding === null || isLoggedIn === null) {
+  if (!loaded || isLoggedIn === null) {
     return null;
   }
 
