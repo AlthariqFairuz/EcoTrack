@@ -6,16 +6,16 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import 'react-native-reanimated';
-
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(false);
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState<boolean | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
   });
 
   useEffect(() => {
@@ -26,6 +26,7 @@ export default function RootLayout() {
     try {
       const seenOnboarding = await AsyncStorage.getItem('hasSeenOnboarding');
       const loggedIn = await AsyncStorage.getItem('isLoggedIn');
+      console.log('Onboarding:', seenOnboarding, 'Logged In:', loggedIn);
       
       setHasSeenOnboarding(seenOnboarding === 'true');
       setIsLoggedIn(loggedIn === 'true');
@@ -44,13 +45,10 @@ export default function RootLayout() {
     <>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
-          {!hasSeenOnboarding ? (
-            <Stack.Screen name="(onboarding)" />
-          ) : !isLoggedIn ? (
-            <Stack.Screen name="(auth)" />
-          ) : (
-            <Stack.Screen name="(tabs)" />
-          )}
+          <Stack.Screen name="(splash)" />
+          <Stack.Screen name="(onboarding)" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(tabs)" />
           <Stack.Screen name="+not-found" />
         </Stack>
         <StatusBar style="auto" />

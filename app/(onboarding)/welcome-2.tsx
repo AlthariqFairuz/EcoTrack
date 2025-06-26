@@ -2,11 +2,11 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Image } from 'expo-image';
+import { Image } from 'expo-image'; 
 
-export default function WelcomeScreen() {
+export default function Welcome2() {
   const handleNext = () => {
-    router.push('/welcome-2');
+    router.push('/welcome-3');
   };
 
   const handleSkip = () => {
@@ -16,41 +16,38 @@ export default function WelcomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <View style={styles.skipContainer}>
-          <TouchableOpacity onPress={handleSkip}>
-            <ThemedText style={styles.skipText}>Lewati</ThemedText>
-          </TouchableOpacity>
+        <TouchableOpacity onPress={handleSkip}>
+          <ThemedText style={styles.skipText}>Lewati</ThemedText>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <View style={styles.logo}>
-            <Image
-              source={require('@/assets/images/logo.png')}
-              style={styles.logoImage}
-              contentFit="contain"
-            />
-          </View>
+        {/* Illustration */}
+        <View style={styles.illustrationContainer}>
+          <Image
+            source={require('@/assets/images/welcome-2.png')}
+            style={styles.illustration}
+            contentFit="contain"
+          />
         </View>
-        
+
+        {/* Text Content */}
         <View style={styles.textContainer}>
-          <ThemedText style={styles.title}>
-            Selamat Datang di
-          </ThemedText>
-          <ThemedText style={[styles.brandText, { marginTop: 8, marginBottom: 16 }]}>
-            EcoTrack
-          </ThemedText>
+          <ThemedText style={styles.title}>Pindai & Lacak</ThemedText>
           
           <ThemedText style={styles.description}>
-            Pelacak jejak karbon berbasis AI yang menjadikan hidup ramah lingkungan terasa mudah dan menyenangkan
+            Arahkan kamera ke struk, makanan, atau transportasi. AI kami akan langsung menghitung dampak karbonnya
           </ThemedText>
         </View>
 
+        {/* Pagination */}
         <View style={styles.paginationContainer}>
-          <View style={[styles.dot, styles.activeDot]} />
           <View style={styles.dot} />
+          <View style={[styles.dot, styles.activeDot]} />
           <View style={styles.dot} />
         </View>
 
+        {/* Next Button */}
         <TouchableOpacity 
           style={styles.nextButton}
           onPress={handleNext}
@@ -67,7 +64,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FAF6E9',
   },
-
   skipContainer: {
     alignItems: 'flex-end',
     paddingTop: 60,
@@ -83,19 +79,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 40,
   },
-  logoContainer: {
-    marginBottom: 25,
-  },
-  logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+   illustrationContainer: {
+    height: 250,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logoImage: {
-    width: 90,
-    height: 100,
+  illustration: {
+    width: 350,
+    height: 250,
   },
   textContainer: {
     alignItems: 'center',
@@ -105,12 +97,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    marginBottom: 20,
     color: '#1f2937',
-  },
-  brandText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#000000',
   },
   description: {
     fontSize: 16,
