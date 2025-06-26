@@ -2,6 +2,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Image } from 'expo-image';
 
 export default function WelcomeScreen() {
   return (
@@ -9,7 +10,11 @@ export default function WelcomeScreen() {
       <View style={styles.content}>
         <View style={styles.logoContainer}>
           <View style={styles.logo}>
-            <ThemedText style={styles.logoIcon}>📍</ThemedText>
+            <Image
+              source={require('@/assets/images/logo.png')}
+              style={styles.logoImage}
+              contentFit="contain"
+            />
           </View>
         </View>
 
@@ -20,8 +25,14 @@ export default function WelcomeScreen() {
           </ThemedText>
           
           <ThemedText style={styles.description}>
-            Pantau jejak karbon bersama AI yang mengajarkan hidup ramah lingkungan terbaik untuk kamu dan lingkungan
+            Pelacak jejak karbon berbasis AI yang menjadikan hidup ramah lingkungan terasa mudah dan menyenangkan
           </ThemedText>
+        </View>
+
+        <View style={styles.paginationContainer}>
+          <View style={[styles.dot, styles.activeDot]} />
+          <View style={styles.dot} />
+          <View style={styles.dot} />
         </View>
 
         <TouchableOpacity 
@@ -38,7 +49,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FAF6E9',
   },
   content: {
     flex: 1,
@@ -50,20 +61,19 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#4ade80',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logoIcon: {
-    fontSize: 32,
-    color: 'white',
+  logoImage: {
+    width: 90,
+    height: 100,
   },
   textContainer: {
     alignItems: 'center',
-    marginBottom: 80,
+    marginBottom: 50,
   },
   title: {
     fontSize: 24,
@@ -73,16 +83,33 @@ const styles = StyleSheet.create({
     color: '#1f2937',
   },
   brandText: {
-    color: '#22c55e',
+    color: '#000000',
   },
   description: {
     fontSize: 16,
     textAlign: 'center',
     lineHeight: 24,
-    color: '#6b7280',
+    color: '#575757',
+  },
+  paginationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+    gap: 8,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#D2D0A0',
+  },
+  activeDot: {
+    backgroundColor: '#9EBC8A',
+    width: 24,
   },
   nextButton: {
-    backgroundColor: '#22c55e',
+    backgroundColor: '#537D5D',
     paddingVertical: 16,
     paddingHorizontal: 60,
     borderRadius: 25,
