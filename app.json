@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ecotrack",
+    "name": "EcoTrack",
     "slug": "ecotrack",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,8 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/images/icon.png",
+        "backgroundColor": "#537D5D"
       },
       "edgeToEdgeEnabled": true,
       "package": "com.althariqfairuz.ecotrack"
@@ -24,15 +24,20 @@
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
+    "splash": {
+      "image": "/assets/images/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#537D5D"
+    },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/icon.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#537D5D"
         }
       ]
     ],
