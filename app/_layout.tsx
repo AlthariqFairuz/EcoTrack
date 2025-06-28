@@ -7,14 +7,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import '../global.css';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-    Poppins: require('../assets/fonts/Poppins-Regular.ttf'),
+  const [fontsLoaded] = useFonts({
+    'Poppins-Regular': require('../assets/fonts/Poppins-Regular.ttf'),
+    'Poppins-Medium': require('../assets/fonts/Poppins-Medium.ttf'),
+    'Poppins-SemiBold': require('../assets/fonts/Poppins-SemiBold.ttf'),
+    'Poppins-Bold': require('../assets/fonts/Poppins-Bold.ttf'),
   });
 
   useEffect(() => {
@@ -31,7 +34,7 @@ export default function RootLayout() {
     }
   };
 
-  if (!loaded || isLoggedIn === null) {
+  if (!fontsLoaded || isLoggedIn === null) {
     return null;
   }
 
