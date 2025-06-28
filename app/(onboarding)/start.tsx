@@ -1,8 +1,8 @@
-import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { Image } from 'expo-image'; 
+
 
 export default function StartScreen() {
   const handleLogin = async () => {
@@ -16,112 +16,43 @@ export default function StartScreen() {
   };
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <View style={styles.logo}>
-            <ThemedText style={styles.logoIcon}>📍</ThemedText>
-          </View>
+    <View className="flex-1 bg-[#FAF6E9]">
+      <View className="flex-1 justify-center items-center px-10">
+        <View className="mb-12">
+            <Image
+              source={require('@/assets/images/logo.png')}
+              style={{ width: 350, height: 250 }}
+              contentFit="contain"
+            />
         </View>
 
-        <View style={styles.textContainer}>
-          <ThemedText style={styles.title}>
-            Mulai Langkah Hijau{'\n'}Bersama EcoTrack
-          </ThemedText>
+        <View className="items-center mb-[60px]">
+            <Text className="font-poppins-semibold text-[25px] text-center mb-5 text-black">
+            Mulai Langkah Hijau{'\n'}
+            Bersama <Text className="text-[#537D5D]">Eco</Text>Track
+            </Text>
           
-          <ThemedText style={styles.description}>
+          <Text className="font-poppins text-[15px] text-center leading-6 text-[#575757]">
             Pantau jejak karbonmu dan ubah kebiasaan kecil jadi dampak besar untuk bumi
-          </ThemedText>
+          </Text>
         </View>
 
-        <View style={styles.buttonContainer}>
+        <View className="w-full max-w-[300px] mt-10">
           <TouchableOpacity 
-            style={styles.loginButton}
+            className="bg-[#CEDD99] py-4 my-2 rounded-[15px]"
             onPress={handleLogin}
           >
-            <ThemedText style={styles.loginButtonText}>Masuk</ThemedText>
+            <Text className="font-poppins-medium text-[#2E5538] text-[17px] text-center">Masuk</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
-            style={styles.registerButton}
+            className="bg-[#537D5D] py-4 my-2 rounded-[15px]"
             onPress={handleRegister}
           >
-            <ThemedText style={styles.registerButtonText}>Daftar</ThemedText>
+            <Text className="font-poppins-medium text-white text-[17px] text-center">Daftar</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ThemedView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 40,
-  },
-  logoContainer: {
-    marginBottom: 50,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#4ade80',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoIcon: {
-    fontSize: 32,
-    color: 'white',
-  },
-  textContainer: {
-    alignItems: 'center',
-    marginBottom: 60,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#1f2937',
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    lineHeight: 24,
-    color: '#6b7280',
-  },
-  buttonContainer: {
-    width: '100%',
-    maxWidth: 300,
-    gap: 16,
-  },
-  loginButton: {
-    backgroundColor: '#a7f3d0',
-    paddingVertical: 16,
-    borderRadius: 25,
-  },
-  loginButtonText: {
-    color: '#047857',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  registerButton: {
-    backgroundColor: '#22c55e',
-    paddingVertical: 16,
-    borderRadius: 25,
-  },
-  registerButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-});
