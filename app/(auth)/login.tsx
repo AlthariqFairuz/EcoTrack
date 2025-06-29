@@ -1,12 +1,9 @@
-import { StyleSheet, View, TouchableOpacity, TextInput } from 'react-native';
+import { View, TouchableOpacity, Text, TextInput } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
 import { Image } from 'expo-image';
 import Toast from 'react-native-toast-message';
-
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -29,223 +26,113 @@ export default function LoginScreen() {
     router.replace('/(tabs)');
   };
 
-  const handleSocialLogin = (provider: string) => {
-    Toast.show({
-        type: 'error',
-        text1: 'Coming soon',
-    });
-  };
+  const handleRegister = async () => {
+    router.replace('/(auth)/signup');
+  }
+  const forgotPassword = async () => {
+    router.replace('/(onboarding)/start');
+  }
 
   return (
-    <ThemedView style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.logoContainer}>
-          <View style={styles.logo}>
-            <Image
-                source={require('@/assets/images/logo.png')}
-                contentFit="contain"
-            />
-          </View>
+    <View className="flex-1 bg-[#FAF6E9]">
+      <View className="items-center pt-[60px]">
+        <View style={{ marginTop: '10%' }} className="w-full justify-center items-center">
+          <Image
+            source={require('@/assets/images/logo.png')}
+            style={{ width: 174, height: 100 }}
+            contentFit="contain"
+          />
         </View>
+        <Text className="font-poppins-medium text-[20px] mt-10 text-black">Selamat Datang</Text>
+        <Text className="font-poppins text-[15px] text-center leading-6 text-[#575757] px-6">
+          Yuk lanjutkan perjalanan ramah lingkunganmu bareng EcoTrack
+        </Text>
 
-        <ThemedText style={styles.title}>Selamat Datang!</ThemedText>
-        <ThemedText style={styles.subtitle}>
-          Yuk lanjutkan perjalanan ramah lingkunganmu bersama EcoTrack
-        </ThemedText>
+        <View className="w-full px-8 mt-10">
+          <Text className="text-black font-poppins-medium text-[14px] mb-1">Email*</Text>
+          <TextInput
+            className="bg-white border border-[#9EBC8A] rounded-[10px] p-4 mb-4 text-black font-poppins text-[14px]"
+            placeholder="Masukkan email kamu"
+            placeholderTextColor="#515151"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            value={email}
+            onChangeText={setEmail}
+          />
 
-        <View style={styles.formContainer}>
-          <View style={styles.inputGroup}>
-            <ThemedText style={styles.label}>Email *</ThemedText>
+          <Text className="text-black font-poppins-medium text-[14px] mb-1">Password*</Text>
+          <View className="relative">
             <TextInput
-              style={styles.input}
-              placeholder="Masukkan email"
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-              autoCapitalize="none"
+              className="bg-white border border-[#9EBC8A] rounded-[10px] p-4 pr-12 text-black font-poppins text-[14px]"
+              placeholder="Masukkan password kamu"
+              placeholderTextColor="#515151"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChangeText={setPassword}
             />
-          </View>
-
-          <View style={styles.inputGroup}>
-            <ThemedText style={styles.label}>Kata Sandi*</ThemedText>
-            <View style={styles.passwordContainer}>
-              <TextInput
-                style={styles.passwordInput}
-                placeholder="Masukkan kata sandi"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword}
-              />
-              <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <ThemedText style={styles.eyeIcon}>👁</ThemedText>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity>
-              <ThemedText style={styles.forgotPassword}>Lupa kata sandi?</ThemedText>
+            <TouchableOpacity
+              className="absolute right-4 top-4"
+              onPress={() => setShowPassword(!showPassword)}
+            >
+              <Text className="text-[#888] font-poppins">
+                {showPassword ? 'Hide' : 'Show'}
+              </Text>
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <ThemedText style={styles.loginButtonText}>Masuk</ThemedText>
+          <TouchableOpacity
+            onPress={forgotPassword}
+          >
+            <View className="flex-row justify-end mt-2">
+              <Text className="text-black font-poppins underline text-[12px]">Lupa kata sandi?</Text>
+            </View>
           </TouchableOpacity>
 
-          <ThemedText style={styles.orText}>Atau lanjutkan dengan</ThemedText>
-
-          <View style={styles.socialContainer}>
-            <TouchableOpacity 
-              style={styles.socialButton}
-              onPress={() => handleSocialLogin('Google')}
-            >
-              <ThemedText style={styles.socialButtonText}>Google</ThemedText>
-            </TouchableOpacity>
-            <TouchableOpacity 
-              style={styles.socialButton}
-              onPress={() => handleSocialLogin('Apple')}
-            >
-              <ThemedText style={styles.socialButtonText}>Apple</ThemedText>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.signupContainer}>
-            <ThemedText style={styles.signupText}>Belum punya akun? </ThemedText>
-            <TouchableOpacity onPress={() => router.push('/signup')}>
-              <ThemedText style={styles.signupLink}>Daftar di sini</ThemedText>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity
+            className="bg-[#537D5D] mt-6 rounded-[15px] p-4 items-center"
+            onPress={handleLogin}
+          >
+            <Text className="text-white font-poppins-medium text-[17px]">Masuk</Text>
+          </TouchableOpacity>
         </View>
+
+        <Text className="font-poppins text-[12px] text-center leading-6 text-[#6A6A6A] px-6 mt-4">
+          Atau lanjutkan dengan
+        </Text>
+
+        <View className="flex-row justify-center mt-4 space-x-4">
+          <TouchableOpacity
+            className="bg-white border border-[#9EBC8A] rounded-[10px] p-3 mx-2"
+            onPress={() => Toast.show({ type: 'info', text1: 'Google login belum tersedia' })}
+          >
+            <Image
+              source={require('@/assets/images/logo.png')}
+              style={{ width: 28, height: 28 }}
+              contentFit="contain"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            className="bg-white border border-[#9EBC8A] rounded-[10px] p-3 mx-2"
+            onPress={() => Toast.show({ type: 'info', text1: 'Apple login belum tersedia' })}
+          >
+            <Image
+              source={require('@/assets/images/logo.png')}
+              style={{ width: 28, height: 28 }}
+              contentFit="contain"
+            />
+          </TouchableOpacity>
+        </View>
+        <View className="flex-row justify-center items-center mt-4 px-6">
+          <Text className="font-poppins text-[12px] text-center leading-6 text-black">
+            Baru pakai <Text className="text-[#537D5D]">Eco</Text>Track?{' '}
+          </Text>
+          <TouchableOpacity onPress={handleRegister}>
+            <Text className="text-[#537D5D] underline font-poppins text-[12px]">Daftar disini</Text>
+          </TouchableOpacity>
+        </View>
+
+
       </View>
-    </ThemedView>
+    </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8f8f8',
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 60,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginBottom: 30,
-  },
-  logo: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#FAF3DA',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 8,
-    color: '#1f2937',
-  },
-  subtitle: {
-    fontSize: 14,
-    textAlign: 'center',
-    color: '#6b7280',
-    marginBottom: 32,
-    lineHeight: 20,
-  },
-  formContainer: {
-    flex: 1,
-  },
-  inputGroup: {
-    marginBottom: 20,
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '500',
-    marginBottom: 8,
-    color: '#374151',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-    backgroundColor: 'white',
-  },
-  passwordContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    borderRadius: 8,
-    backgroundColor: 'white',
-  },
-  passwordInput: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    fontSize: 16,
-  },
-  eyeIcon: {
-    paddingHorizontal: 16,
-    fontSize: 16,
-  },
-  forgotPassword: {
-    textAlign: 'right',
-    color: '#22c55e',
-    fontSize: 12,
-    marginTop: 8,
-  },
-  loginButton: {
-    backgroundColor: '#22c55e',
-    borderRadius: 25,
-    paddingVertical: 16,
-    marginBottom: 24,
-  },
-  loginButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  orText: {
-    textAlign: 'center',
-    color: '#6b7280',
-    fontSize: 14,
-    marginBottom: 16,
-  },
-  socialContainer: {
-    flexDirection: 'row',
-    gap: 12,
-    marginBottom: 24,
-  },
-  socialButton: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#d1d5db',
-    borderRadius: 8,
-    paddingVertical: 12,
-    backgroundColor: 'white',
-  },
-  socialButtonText: {
-    textAlign: 'center',
-    fontSize: 14,
-    color: '#374151',
-  },
-  signupContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  signupText: {
-    color: '#6b7280',
-    fontSize: 14,
-  },
-  signupLink: {
-    color: '#22c55e',
-    fontSize: 14,
-    fontWeight: '500',
-  },
-});
