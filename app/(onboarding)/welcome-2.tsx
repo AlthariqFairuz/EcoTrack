@@ -18,7 +18,7 @@ export default function Welcome2() {
       <View className="items-end pt-[60px] pr-5">
         <TouchableOpacity onPress={debouncedSkip}>
           <Text className="font-poppins text-[15px] text-[#575757]">Lewati</Text>
-        </TouchableOpacity>font-poppins
+        </TouchableOpacity>
       </View>
 
       <View className="flex-1 justify-center items-center px-10">
