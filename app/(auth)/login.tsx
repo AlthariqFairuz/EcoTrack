@@ -33,6 +33,9 @@ export default function LoginScreen() {
     router.replace('/(onboarding)/start');
   }
 
+  function handleLoginAuth(){
+    router.replace('/(tabs)');
+  }
   return (
     <View className="flex-1 bg-[#FAF6E9]">
       <View className="items-center pt-[60px]">
@@ -102,24 +105,27 @@ export default function LoginScreen() {
 
         <View className="flex-row justify-center mt-4 space-x-4">
           <TouchableOpacity
-            className="bg-white border border-[#9EBC8A] rounded-[10px] p-3 mx-2"
-            onPress={() => Toast.show({ type: 'info', text1: 'Google login belum tersedia' })}
+            className="bg-white border flex-row border-[#9EBC8A] rounded-[10px] p-3 mx-2"
+            onPress={handleLoginAuth}
           >
             <Image
-              source={require('@/assets/images/logo.png')}
+              source={require('@/assets/images/google.svg')}
               style={{ width: 28, height: 28 }}
               contentFit="contain"
             />
+            <Text className="text-[#537D5D] font-poppins text-[12px] text-center ml-4 mt-1">Google</Text>
+
           </TouchableOpacity>
           <TouchableOpacity
-            className="bg-white border border-[#9EBC8A] rounded-[10px] p-3 mx-2"
-            onPress={() => Toast.show({ type: 'info', text1: 'Apple login belum tersedia' })}
+            className="bg-white border flex-row border-[#9EBC8A] rounded-[10px] p-3 mx-2"
+            onPress={handleLoginAuth}
           >
             <Image
-              source={require('@/assets/images/logo.png')}
+              source={require('@/assets/images/apple.svg')}
               style={{ width: 28, height: 28 }}
               contentFit="contain"
             />
+            <Text className="text-[#537D5D] font-poppins text-[12px] text-center ml-4 mt-1">Apple</Text>
           </TouchableOpacity>
         </View>
         <View className="flex-row justify-center items-center mt-4 px-6">
