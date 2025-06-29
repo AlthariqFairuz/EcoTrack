@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const Calculator = () => {
+const Community = () => {
     return (
         <View>
-            <Text>Kalkulator</Text>
+            <Text>Komunitas</Text>
         </View>
     );
 };
 
-export default Calculator;
+export default Community;

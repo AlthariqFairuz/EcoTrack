@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const Calculator = () => {
+const Track = () => {
     return (
         <View>
-            <Text>Kalkulator</Text>
+            <Text>Track</Text>
         </View>
     );
 };
 
-export default Calculator;
+export default Track;
