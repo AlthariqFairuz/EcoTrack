@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 const Community = () => {
     return (
         <View>
-            <Text>Komunitas</Text>
+            <Text>MAS RANDYYY</Text>
         </View>
     );
 };

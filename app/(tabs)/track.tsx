@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 const Track = () => {
     return (
         <View>
-            <Text>Track</Text>
+            <Text>MAS RANDYYY</Text>
         </View>
     );
 };
