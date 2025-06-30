@@ -9,6 +9,7 @@ import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
+import Header from '@/components/header/header';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -75,25 +76,7 @@ export default function DashboardScreen() {
   return (
     <View className="flex-1 bg-orange-50">
       {/* Header */}
-      <LinearGradient
-        colors={['#22c55e', '#16a34a']}
-        className="pt-12 pb-5 px-5"
-      >
-        <View className="flex-row justify-between items-center">
-          <View className="flex-row items-center">
-            <ThemedText className="text-base mr-2">📍</ThemedText>
-            <ThemedText className="text-white text-sm font-medium">
-              Jakarta, Indonesia
-            </ThemedText>
-          </View>
-          <TouchableOpacity 
-            className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
-            onPress={handleLogout}
-          >
-            <ThemedText className="text-lg">😊</ThemedText>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
+      <Header title='Jakarta, Indonesia' isOnDashboard={true}/>
 
       <ScrollView className="flex-1 p-5">
         {/* Greeting Card */}

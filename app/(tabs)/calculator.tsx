@@ -4,6 +4,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Dropdown } from 'react-native-element-dropdown';
 import { Image } from 'expo-image';
+import Header from '@/components/header/header';
 
 export default function Calculator() {
   const [bodyType, setBodyType] = useState('');
@@ -31,14 +32,8 @@ export default function Calculator() {
 
   return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF3DA' }}>
-        <View className="px-4 pt-4">
-            <ThemedText className="text-2xl font-bold text-gray-800 mb-2">
-            HEADER MAS RANDY
-            </ThemedText>
-            <ThemedText className="text-sm text-gray-600">
-            MAS RANDY
-            </ThemedText>
-        </View>
+      <Header title='Kalkulator Karbon' isOnDashboard={true}/>
+
 
       <ScrollView className="flex-1 px-4 pt-4" showsVerticalScrollIndicator={false}>
         {/* Info Card */}
