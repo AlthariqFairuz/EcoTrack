@@ -31,7 +31,7 @@ export default function ProfilePage() {
 
     return (
         <View className='bg-[#FAF6E9]'>
-            
+
             <ProfileHeader title='Profil' isOnProfile={true} />
 
             <ScrollView className='flex p-4 px-8'>
@@ -94,32 +94,43 @@ export default function ProfilePage() {
 
                 {/* Buttons */}
                 {/* onPress tiap button belum dihandle */}
-                <View className='flex flex-col bg-white rounded-xl m-4'>
+                <View style={{
+                    flexDirection: 'column',
+                    backgroundColor: 'white',
+                    borderRadius: 12,
+                    }}>
                     <TouchableOpacity
                         onPress={() => {}}
-                        className="flex-row items-center px-5 py-4 active:bg-gray-100"
+                        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText className="text-base text-gray-800">Target Karbon</ThemedText>
+                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Target Karbon</ThemedText>
                     </TouchableOpacity>
+                    <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
+
                     <TouchableOpacity
                         onPress={() => {}}
-                        className="flex-row items-center px-5 py-4 active:bg-gray-100"
+                        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText className="text-base text-gray-800">Pengaturan</ThemedText>
+                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Pengaturan</ThemedText>
                     </TouchableOpacity>
+                    <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
+
                     <TouchableOpacity
                         onPress={() => {}}
-                        className="flex-row items-center px-5 py-4 active:bg-gray-100"
+                        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText className="text-base text-gray-800">Bantuan & FAQ</ThemedText>
+                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Bantuan & FAQ</ThemedText>
                     </TouchableOpacity>
+                    <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
+
                     <TouchableOpacity
                         onPress={() => handleLogout()}
-                        className="flex-row items-center px-5 py-4 active:bg-gray-100"
+                        style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText className="text-base text-gray-800">Keluar</ThemedText>
+                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Keluar</ThemedText>
                     </TouchableOpacity>
                 </View>
+
             </ScrollView>
         </View>
     )
