@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { Dropdown } from 'react-native-element-dropdown';
-import { Image } from 'expo-image';
 import Header from '@/components/header/header';
+import { ThemedView } from '@/components/ThemedView';
+import { Image } from 'expo-image';
+import React, { useState } from 'react';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { Dropdown } from 'react-native-element-dropdown';
 
 export default function Calculator() {
   const [bodyType, setBodyType] = useState('');
@@ -32,8 +31,8 @@ export default function Calculator() {
 
   return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF3DA' }}>
-      <Header title='Kalkulator Karbon' isOnDashboard={true}/>
-
+      {/* Header */}
+      <Header title='Kalkulator Karbon' isOnDashboard={false}/>
 
       <ScrollView className="flex-1 px-4 pt-4" showsVerticalScrollIndicator={false}>
         {/* Info Card */}
@@ -52,12 +51,12 @@ export default function Calculator() {
             />
           </View>
           <View className="flex-1 ml-8">
-            <ThemedText className="text-sm font-poppins-bold text-gray-800 mb-1">
+            <Text className="text-lg font-poppins-bold text-gray-800 mb-1">
               Isi data berikut dengan benar!
-            </ThemedText>
-            <ThemedText className="text-xs text-gray-600">
+            </Text>
+            <Text className="text-sm text-gray-600">
               Untuk memperoleh hasil yang akurat
-            </ThemedText>
+            </Text>
           </View>
         </View>
 
@@ -69,15 +68,15 @@ export default function Calculator() {
               style={{ width: 32, height: 32,  borderRadius: 16, marginRight: 8 }}
               contentFit="contain"
             />
-            <ThemedText className="font-poppins-bold text-xl text-gray-800">
+            <Text className="font-poppins-bold text-xl text-gray-800">
               Data Pribadi
-            </ThemedText>
+            </Text>
           </View>
 
           <View>
-            <ThemedText className="text-sm font-poppins-semibold text-gray-700 mb-2">
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
               Tipe Tubuh
-            </ThemedText>
+            </Text>
             <Dropdown
               data={bodyTypeOptions}
               labelField="label"
@@ -103,9 +102,9 @@ export default function Calculator() {
               }}
             />
 
-            <ThemedText className="text-sm font-poppins-semibold text-gray-700 mb-2">
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
               Jenis Kelamin
-            </ThemedText>
+            </Text>
             <Dropdown
               data={genderOptions}
               labelField="label"
@@ -131,9 +130,9 @@ export default function Calculator() {
               }}
             />
 
-            <ThemedText className="text-sm font-poppins-semibold text-gray-700 mb-2">
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
               Frekuensi Mandi
-            </ThemedText>
+            </Text>
             <Dropdown
               data={bathingOptions}
               labelField="label"
@@ -165,9 +164,9 @@ export default function Calculator() {
         <TouchableOpacity 
           className="bg-[#537D5D] py-4 rounded-xl mx-2 mb-8"
         >
-          <ThemedText  style={{ color: 'white' }} className="text-white text-center font-poppins text-base">
+          <Text  style={{ color: 'white' }} className="text-white text-center font-poppins text-base">
             Hitung Jejak Karbon
-          </ThemedText>
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </ThemedView>

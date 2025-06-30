@@ -57,22 +57,6 @@ export default function DashboardScreen() {
     }
   };
 
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem('isLoggedIn');
-    await AsyncStorage.removeItem('userEmail');
-    await AsyncStorage.removeItem('userName');
-    
-    Toast.show({
-      type: 'success',
-      text1: 'Logout berhasil',
-      text2: 'Sampai jumpa! 👋'
-    });
-    
-    setTimeout(() => {
-      router.replace('/(auth)/login');
-    }, 1000);
-  };
-
   return (
     <View className="flex-1 bg-orange-50">
       {/* Header */}
