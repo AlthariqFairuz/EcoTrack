@@ -1,5 +1,4 @@
 import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
@@ -9,7 +8,8 @@ import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
-import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import Header from '@/components/header/header';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -74,32 +74,13 @@ export default function DashboardScreen() {
   };
 
   return (
-    <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
+    <View className="flex-1 bg-orange-50">
       {/* Header */}
-      <LinearGradient
-        colors={['#537D5D', '#537D5D']}
-        className="pt-12 pb-5 px-5"
-      >
-        <View className="flex-row justify-between items-center">
-          <View className="flex-row items-center">
-            <MaterialIcons name="location-on" size={16} color="white" />
-            <ThemedText className="text-white text-sm font-poppins ml-1">
-              Jakarta, Indonesia
-            </ThemedText>
-          </View>
-          <View className="flex-row space-x-3">
-            <TouchableOpacity className="w-9 h-9 rounded-full bg-white/20 justify-center items-center">
-              <Ionicons name="notifications-outline" size={20} color="white" />
-            </TouchableOpacity>
-            <TouchableOpacity 
-              className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
-              onPress={handleLogout}
-            >
-              <FontAwesome5 name="user-circle" size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </LinearGradient>
+      <Header 
+        title='Jakarta, Indonesia' 
+        isOnDashboard={true}
+        onLogout={handleLogout}
+      />
 
       <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
