@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { View, TouchableOpacity, Text } from 'react-native';
+import { Image } from 'expo-image';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface GreetingCardProps {
   userName: string;
@@ -31,63 +32,88 @@ export function GreetingCard({
   };
 
   return (
-    <View className="bg-white rounded-2xl p-5 mb-5 shadow-sm">
-      <View className="flex-row">
-        <View className="flex-1">
-          <ThemedText className="text-lg font-bold text-gray-800 mb-1">
-            {getGreeting()}, {userName}!
-          </ThemedText>
-          <ThemedText className="text-xs text-gray-500 mb-4">
-            Target hari ini: {dailyTarget}
-          </ThemedText>
-          
-          <View className="mb-4">
-            <ThemedText className="text-sm text-gray-600 mb-1">
-              Dampak Hari Ini
-            </ThemedText>
-            <ThemedText className="text-2xl font-bold text-gray-800 mb-1">
-              {currentEmission} <ThemedText className="text-sm font-normal text-gray-500">kg CO₂e</ThemedText>
-            </ThemedText>
-            
-            <View className="flex-row items-center mb-4">
-              <ThemedText className={`text-xs font-medium ${isIncrease ? 'text-red-500' : 'text-green-500'}`}>
-                {isIncrease ? '↗' : '↘'} {percentageChange}% {isIncrease ? 'di atas' : 'di bawah'} kemarin
-              </ThemedText>
-            </View>
-            
-            {/* Progress Bar */}
-            <View className="mb-4">
-              <View className="h-2 bg-gray-200 rounded-full mb-2">
-                <View 
-                  className={`h-full rounded-full ${isOnTrack ? 'bg-green-500' : 'bg-yellow-400'}`}
-                  style={{ width: `${progressPercentage}%` }}
-                />
-              </View>
-              <View className="flex-row justify-between">
-                <ThemedText className="text-xs text-gray-500">0 kg</ThemedText>
-                <ThemedText className={`text-xs font-medium ${isOnTrack ? 'text-green-600' : 'text-yellow-600'}`}>
-                  {isOnTrack ? 'Sesuai target!' : 'Mendekati target'}
-                </ThemedText>
-                <ThemedText className="text-xs text-gray-500">{targetEmission} kg</ThemedText>
-              </View>
-            </View>
+    <View className="mb-5">
+      {/* Greeting and Target - Outside the card */}
+      <View className="mb-4">
+        <Text className="text-lg font-poppins-semibold text-gray-800 mb-1">
+          {getGreeting()}, {userName}!
+        </Text>
+        <Text className="text-xs text-gray-500 font-poppins">
+          Target hari ini {dailyTarget}
+        </Text>
+      </View>
 
-            <TouchableOpacity className="bg-green-100 px-4 py-2 rounded-lg self-start">
-              <View className="flex-row items-center">
-                <ThemedText className="text-green-600 text-xs font-medium mr-1">📊</ThemedText>
-                <ThemedText className="text-green-600 text-xs font-medium">
-                  Lihat Analisis
-                </ThemedText>
+      {/* White Card */}
+      <View className="bg-white rounded-2xl p-5" style={{
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+        elevation: 3,
+      }}>
+        <View className="flex-row">
+          <View className="flex-1">
+            <View className="mb-4">
+              <Text className="text-sm text-gray-600 mb-1 font-poppins">
+                Dampak Hari Ini
+              </Text>
+              <Text className="font-poppins-bold text-gray-800 mb-1">
+                {currentEmission} <Text className="text-sm font-poppins text-gray-500">kg CO₂e</Text>
+              </Text>
+              
+              <View className="flex-row items-center mb-4">
+                <MaterialIcons 
+                  name={isIncrease ? "trending-up" : "trending-down"} 
+                  size={16} 
+                  color={isIncrease ? "#ef4444" : "#537D5D"} 
+                />
+                <Text className={`text-xs font-poppins ml-1 ${isIncrease ? 'text-red-500' : 'text-green-500'}`}>
+                  {percentageChange}% {isIncrease ? 'di atas' : 'di bawah'} kemarin
+                </Text>
               </View>
-            </TouchableOpacity>
+            </View>
+          </View>
+          
+          {/* Character Illustration */}
+          <View className="justify-center items-center ml-4">
+            <Image
+              source={require('@/assets/images/sapi_jempol_1.png')}
+              style={{ width: 100, height: 100 }}
+              contentFit="contain"
+            />
           </View>
         </View>
-        
-        {/* Character Illustration */}
-        <View className="justify-center items-center ml-4">
-          <View className="w-16 h-16 bg-green-100 rounded-full items-center justify-center">
-            <ThemedText className="text-3xl">🌱</ThemedText>
+
+        {/* Progress Bar */}
+        <View className="mb-4">
+          <View className="h-2 bg-gray-200 rounded-full mb-2">
+            <View 
+              className="h-full rounded-full"
+              style={{ 
+                width: `${progressPercentage}%`,
+                backgroundColor: '#2E5538'
+              }}
+            />
           </View>
+          <View className="flex-row justify-between">
+            <Text className="text-xs text-gray-500 font-poppins">0 kg</Text>
+            <Text className="text-xs font-poppins" style={{ color: '#2E5538' }}>
+              {isOnTrack ? 'Sesuai target!' : 'Mendekati target'}
+            </Text>
+            <Text className="text-xs text-gray-500 font-poppins">{targetEmission} kg</Text>
+          </View>
+        </View>
+
+        {/* Center Button */}
+        <View className="items-center">
+          <TouchableOpacity className="px-4 py-2 rounded-xl" style={{ backgroundColor: '#CEDD99' }}>
+            <View className="flex-row items-center">
+              <MaterialIcons name="bar-chart" size={16} color="#2E5538" />
+              <Text className="text-xs font-poppins ml-1" style={{ color: '#2E5538' }}>
+                Lihat Analisis
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

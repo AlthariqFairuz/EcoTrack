@@ -3,6 +3,7 @@ import { View, TouchableOpacity } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { RecommendationCard } from '@/components/dashboard/RecommendationCard';
 import { recommendationService, Recommendation, UserData } from '@/services/recommendationService';
+import { MaterialIcons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 interface AIRecommendationsProps {
@@ -58,8 +59,8 @@ export function AIRecommendations({ userData }: AIRecommendationsProps) {
       <View>
         <View className="bg-gray-50 rounded-xl p-4 mb-3">
           <View className="flex-row items-center justify-center py-8">
-            <ThemedText className="text-4xl mr-2">🤖</ThemedText>
-            <ThemedText className="text-sm text-gray-500">AI sedang menganalisis...</ThemedText>
+            <MaterialIcons name="smart-toy" size={32} color="#6b7280" />
+            <ThemedText className="text-sm text-gray-500 font-poppins ml-2">AI sedang menganalisis...</ThemedText>
           </View>
         </View>
       </View>
@@ -71,8 +72,8 @@ export function AIRecommendations({ userData }: AIRecommendationsProps) {
       {recommendations.length === 0 ? (
         <View className="bg-gray-50 rounded-xl p-4 mb-3">
           <View className="items-center py-8">
-            <ThemedText className="text-4xl mb-2">✨</ThemedText>
-            <ThemedText className="text-sm text-gray-500 text-center">
+            <MaterialIcons name="eco" size={32} color="#16a34a" />
+            <ThemedText className="text-sm text-gray-500 text-center font-poppins mt-2">
               Kamu sudah sangat ramah lingkungan hari ini!
             </ThemedText>
           </View>

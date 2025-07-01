@@ -9,6 +9,7 @@ import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
+import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -73,29 +74,34 @@ export default function DashboardScreen() {
   };
 
   return (
-    <View className="flex-1 bg-orange-50">
+    <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
       <LinearGradient
-        colors={['#22c55e', '#16a34a']}
+        colors={['#537D5D', '#537D5D']}
         className="pt-12 pb-5 px-5"
       >
         <View className="flex-row justify-between items-center">
           <View className="flex-row items-center">
-            <ThemedText className="text-base mr-2">📍</ThemedText>
-            <ThemedText className="text-white text-sm font-medium">
+            <MaterialIcons name="location-on" size={16} color="white" />
+            <ThemedText className="text-white text-sm font-poppins ml-1">
               Jakarta, Indonesia
             </ThemedText>
           </View>
-          <TouchableOpacity 
-            className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
-            onPress={handleLogout}
-          >
-            <ThemedText className="text-lg">😊</ThemedText>
-          </TouchableOpacity>
+          <View className="flex-row space-x-3">
+            <TouchableOpacity className="w-9 h-9 rounded-full bg-white/20 justify-center items-center">
+              <Ionicons name="notifications-outline" size={20} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
+              onPress={handleLogout}
+            >
+              <FontAwesome5 name="user-circle" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
         </View>
       </LinearGradient>
 
-      <ScrollView className="flex-1 p-5">
+      <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
         <GreetingCard
           userName={userName}
@@ -108,7 +114,7 @@ export default function DashboardScreen() {
 
         {/* AI Recommendations */}
         <View className="mb-5">
-          <ThemedText className="text-lg font-bold text-gray-800 mb-4">
+          <ThemedText className="text-lg font-poppins-bold text-gray-800 mb-4">
             Rekomendasi AI
           </ThemedText>
           <AIRecommendations userData={userData} />
@@ -125,10 +131,17 @@ export default function DashboardScreen() {
 
       {/* Floating Chat Button */}
       <TouchableOpacity 
-        className="absolute bottom-20 right-5 w-14 h-14 bg-green-600 rounded-full items-center justify-center shadow-lg"
-        style={{ elevation: 8 }}
+        className="absolute bottom-20 right-5 w-14 h-14 rounded-full items-center justify-center shadow-lg"
+        style={{ 
+          backgroundColor: '#537D5D',
+          elevation: 8,
+          shadowColor: '#000000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+        }}
       >
-        <ThemedText className="text-white text-xl">💬</ThemedText>
+        <Ionicons name="chatbubble-outline" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );
