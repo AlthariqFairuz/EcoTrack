@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Recommendation } from '@/services/recommendationService';
 import { Image } from 'expo-image';
 import Toast from 'react-native-toast-message';
@@ -51,7 +50,13 @@ export function RecommendationCard({ recommendation, onActionTaken }: Recommenda
   };
 
   return (
-    <View className="bg-gray-50 rounded-xl p-4 mb-3">
+    <View className="bg-white rounded-xl p-4 mb-3" style={{
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.1,
+      shadowRadius: 3,
+      elevation: 2,
+    }}>
       <View className="flex-row items-start">
         <View className={`w-12 h-12 rounded-xl ${getIconBackground(recommendation.type)} justify-center items-center mr-4`}>
           <Image
@@ -62,25 +67,26 @@ export function RecommendationCard({ recommendation, onActionTaken }: Recommenda
         </View>
         
         <View className="flex-1">
-          <ThemedText className="text-sm font-poppins-semibold text-gray-800 mb-2">
+          <Text className="text-sm font-poppins-semibold text-gray-800 mb-2">
             {recommendation.title}
-          </ThemedText>
-          <ThemedText className="text-xs text-gray-600 leading-4 mb-2 font-poppins">
+          </Text>
+          <Text className="text-xs text-gray-600 leading-4 mb-2 font-poppins">
             {recommendation.description}
-          </ThemedText>
-          <ThemedText className="text-xs text-green-600 font-poppins-semibold">
+          </Text>
+          <Text className="text-xs font-poppins-semibold" style={{ color: '#537D5D' }}>
             {recommendation.impact}
-          </ThemedText>
+          </Text>
         </View>
         
         {recommendation.actionable && (
           <TouchableOpacity 
-            className="bg-green-200 px-3 py-2 rounded-lg"
+            className="px-3 py-2 rounded-lg"
+            style={{ backgroundColor: '#CEDD99' }}
             onPress={handleActionPress}
           >
-            <ThemedText className="text-xs text-green-700 font-poppins-semibold">
+            <Text className="text-xs font-poppins-semibold" style={{ color: '#2E5538' }}>
               Ambil Aksi
-            </ThemedText>
+            </Text>
           </TouchableOpacity>
         )}
       </View>

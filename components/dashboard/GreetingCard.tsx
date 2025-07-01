@@ -35,10 +35,10 @@ export function GreetingCard({
     <View className="mb-5">
       {/* Greeting and Target - Outside the card */}
       <View className="mb-4">
-        <Text className="text-lg font-poppins-semibold text-gray-800 mb-1">
-          {getGreeting()}, {userName}!
+        <Text className="text-xl font-poppins-semibold text-gray-800 mb-1">
+          {getGreeting()}, <Text className='font-poppins-bold'>{userName}!</Text>
         </Text>
-        <Text className="text-xs text-gray-500 font-poppins">
+        <Text className="text-sm text-gray-500 font-poppins">
           Target hari ini {dailyTarget}
         </Text>
       </View>
@@ -57,7 +57,7 @@ export function GreetingCard({
               <Text className="text-sm text-gray-600 mb-1 font-poppins">
                 Dampak Hari Ini
               </Text>
-              <Text className="font-poppins-bold text-gray-800 mb-1">
+              <Text className="font-poppins-bold text-2xl text-gray-800 mb-1">
                 {currentEmission} <Text className="text-sm font-poppins text-gray-500">kg CO₂e</Text>
               </Text>
               
@@ -67,7 +67,7 @@ export function GreetingCard({
                   size={16} 
                   color={isIncrease ? "#ef4444" : "#537D5D"} 
                 />
-                <Text className={`text-xs font-poppins ml-1 ${isIncrease ? 'text-red-500' : 'text-green-500'}`}>
+                <Text className={`text-sm font-poppins ml-1 ${isIncrease ? 'text-red-500' : 'text-green-500'}`}>
                   {percentageChange}% {isIncrease ? 'di atas' : 'di bawah'} kemarin
                 </Text>
               </View>
@@ -96,11 +96,11 @@ export function GreetingCard({
             />
           </View>
           <View className="flex-row justify-between">
-            <Text className="text-xs text-gray-500 font-poppins">0 kg</Text>
-            <Text className="text-xs font-poppins" style={{ color: '#2E5538' }}>
+            <Text className="text-sm font-poppins">0 kg</Text>
+            <Text className="text-sm font-poppins" style={{ color: '#2E5538' }}>
               {isOnTrack ? 'Sesuai target!' : 'Mendekati target'}
             </Text>
-            <Text className="text-xs text-gray-500 font-poppins">{targetEmission} kg</Text>
+            <Text className="text-sm font-poppins">{targetEmission} kg</Text>
           </View>
         </View>
 
@@ -109,7 +109,7 @@ export function GreetingCard({
           <TouchableOpacity className="px-4 py-2 rounded-xl" style={{ backgroundColor: '#CEDD99' }}>
             <View className="flex-row items-center">
               <MaterialIcons name="bar-chart" size={16} color="#2E5538" />
-              <Text className="text-xs font-poppins ml-1" style={{ color: '#2E5538' }}>
+              <Text className="text-sm font-poppins ml-1" style={{ color: '#2E5538' }}>
                 Lihat Analisis
               </Text>
             </View>

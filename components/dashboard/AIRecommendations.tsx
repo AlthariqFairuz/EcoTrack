@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity } from 'react-native';
-import { ThemedText } from '@/components/ThemedText';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { RecommendationCard } from '@/components/dashboard/RecommendationCard';
 import { recommendationService, Recommendation, UserData } from '@/services/recommendationService';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -60,7 +59,7 @@ export function AIRecommendations({ userData }: AIRecommendationsProps) {
         <View className="bg-gray-50 rounded-xl p-4 mb-3">
           <View className="flex-row items-center justify-center py-8">
             <MaterialIcons name="smart-toy" size={32} color="#6b7280" />
-            <ThemedText className="text-sm text-gray-500 font-poppins ml-2">AI sedang menganalisis...</ThemedText>
+            <Text className="text-sm text-gray-500 font-poppins ml-2">AI sedang menganalisis...</Text>
           </View>
         </View>
       </View>
@@ -73,9 +72,9 @@ export function AIRecommendations({ userData }: AIRecommendationsProps) {
         <View className="bg-gray-50 rounded-xl p-4 mb-3">
           <View className="items-center py-8">
             <MaterialIcons name="eco" size={32} color="#16a34a" />
-            <ThemedText className="text-sm text-gray-500 text-center font-poppins mt-2">
+            <Text className="text-sm text-gray-500 text-center font-poppins mt-2">
               Kamu sudah sangat ramah lingkungan hari ini!
-            </ThemedText>
+            </Text>
           </View>
         </View>
       ) : (
