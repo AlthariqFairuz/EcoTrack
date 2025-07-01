@@ -1,5 +1,4 @@
 import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
@@ -10,6 +9,7 @@ import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
 import Header from '@/components/header/header';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -57,12 +57,31 @@ export default function DashboardScreen() {
     }
   };
 
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('isLoggedIn');
+    await AsyncStorage.removeItem('userEmail');
+    await AsyncStorage.removeItem('userName');
+    
+    Toast.show({
+      type: 'success',
+      text1: 'Logout berhasil',
+      text2: 'Sampai jumpa! 👋'
+    });
+    
+    setTimeout(() => {
+      router.replace('/(auth)/login');
+    }, 1000);
+  };
+
   return (
     <View className="flex-1 bg-orange-50">
       {/* Header */}
-      <Header title='Jakarta, Indonesia' isOnDashboard={true}/>
+      <Header 
+        title='Jakarta, Indonesia' 
+        isOnDashboard={true}
+      />
 
-      <ScrollView className="flex-1 p-5">
+      <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
         <GreetingCard
           userName={userName}
@@ -75,7 +94,7 @@ export default function DashboardScreen() {
 
         {/* AI Recommendations */}
         <View className="mb-5">
-          <ThemedText className="text-lg font-bold text-gray-800 mb-4">
+          <ThemedText className="text-lg font-poppins-bold text-gray-800 mb-4">
             Rekomendasi AI
           </ThemedText>
           <AIRecommendations userData={userData} />
@@ -92,10 +111,17 @@ export default function DashboardScreen() {
 
       {/* Floating Chat Button */}
       <TouchableOpacity 
-        className="absolute bottom-20 right-5 w-14 h-14 bg-green-600 rounded-full items-center justify-center shadow-lg"
-        style={{ elevation: 8 }}
+        className="absolute bottom-20 right-5 w-14 h-14 rounded-full items-center justify-center shadow-lg"
+        style={{ 
+          backgroundColor: '#537D5D',
+          elevation: 8,
+          shadowColor: '#000000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+        }}
       >
-        <ThemedText className="text-white text-xl">💬</ThemedText>
+        <Ionicons name="chatbubble-outline" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );
