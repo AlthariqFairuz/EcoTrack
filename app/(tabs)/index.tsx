@@ -79,7 +79,6 @@ export default function DashboardScreen() {
       <Header 
         title='Jakarta, Indonesia' 
         isOnDashboard={true}
-        onLogout={handleLogout}
       />
 
       <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
