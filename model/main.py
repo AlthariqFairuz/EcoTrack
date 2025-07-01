@@ -38,7 +38,6 @@ FEATURE_ORDER = ['Body Type', 'Sex', 'Diet', 'How Often Shower', 'Heating Energy
                  'How Long TV PC Daily Hour', 'How Many New Clothes Monthly', 'How Long Internet Daily Hour',
                  'Energy efficiency', 'Recycling', 'Cooking_With']
 
-# Pydantic model untuk input data
 class CarbonEmissionInput(BaseModel):
     body_type: str
     sex: str
