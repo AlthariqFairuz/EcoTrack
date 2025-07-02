@@ -2,7 +2,7 @@ import Header from '@/components/header/header';
 import { ThemedView } from '@/components/ThemedView';
 import { Image } from 'expo-image';
 import React, { useState } from 'react';
-import { ScrollView, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 
 export default function Calculator() {
@@ -14,6 +14,18 @@ export default function Calculator() {
   const [socialActivity, setSocialActivity] = useState('');
   const [heatingEnergy, setHeatingEnergy] = useState('');
   const [energyEfficiency, setEnergyEfficiency] = useState('');
+  const [distanceTraveled, setDistanceTraveled] = useState<number | undefined>(undefined);
+  const [transportPreference, setTransportPreference] = useState('');
+  const [vehicleType, setVehicleType] = useState('');
+  const [airTravelFrequency, setAirTravelFrequency] = useState('');
+  const [wasteBagSize, setWasteBagSize] = useState('');
+  const [totalBags, setTotalBags] = useState<number | undefined>(undefined);
+  const [recyclingType, setRecyclingType] = useState('');
+  const [tvUsage, setTvUsage] = useState<number | undefined>(undefined);
+  const [internetUsage, setInternetUsage] = useState<number | undefined>(undefined);
+  const [clothingPurchases, setClothingPurchases] = useState<number | undefined>(undefined);
+  const [cookingMethod, setCookingMethod] = useState('');
+
 
 const bodyTypeOptions = [
   { label: 'Kurus', value: 'underweight' },
@@ -89,19 +101,42 @@ const wasteBagSizeOptions = [
   { label: 'Sangat Besar', value: 'extra large' }
 ];
 
-const recyclingOptions = [
-  { label: 'Kertas', value: 'Paper' },
-  { label: 'Plastik', value: 'Plastic' },
-  { label: 'Kaca', value: 'Glass' },
-  { label: 'Logam', value: 'Metal' }
+const cookingMethodOptions = [
+  { label: 'Tidak Ada Alat Masak', value: [] },
+  { label: 'Kompor', value: ['Stove'] },
+  { label: 'Oven', value: ['Oven'] },
+  { label: 'Microwave', value: ['Microwave'] },
+  { label: 'Kompor + Oven', value: ['Stove', 'Oven'] },
+  { label: 'Kompor + Microwave', value: ['Stove', 'Microwave'] },
+  { label: 'Oven + Microwave', value: ['Oven', 'Microwave'] },
+  { label: 'Grill + Airfryer', value: ['Grill', 'Airfryer'] },
+  { label: 'Microwave + Grill + Airfryer', value: ['Microwave', 'Grill', 'Airfryer'] },
+  { label: 'Kompor + Oven + Microwave', value: ['Stove', 'Oven', 'Microwave'] },
+  { label: 'Oven + Microwave + Grill + Airfryer', value: ['Oven', 'Microwave', 'Grill', 'Airfryer'] },
+  { label: 'Kompor + Grill + Airfryer', value: ['Stove', 'Grill', 'Airfryer'] },
+  { label: 'Oven + Grill + Airfryer', value: ['Oven', 'Grill', 'Airfryer'] },
+  { label: 'Kompor + Oven + Grill + Airfryer', value: ['Stove', 'Oven', 'Grill', 'Airfryer'] },
+  { label: 'Kompor + Microwave + Grill + Airfryer', value: ['Stove', 'Microwave', 'Grill', 'Airfryer'] },
+  { label: 'Lengkap (Semua Alat)', value: ['Stove', 'Oven', 'Microwave', 'Grill', 'Airfryer'] }
 ];
 
-const cookingMethodOptions = [
-  { label: 'Kompor', value: 'Stove' },
-  { label: 'Oven', value: 'Oven' },
-  { label: 'Microwave', value: 'Microwave' },
-  { label: 'Pemanggang', value: 'Grill' },
-  { label: 'Air Fryer', value: 'Airfryer' }
+const recyclingOptions = [
+  { label: 'Tidak Recycle', value: [] },
+  { label: 'Logam', value: ['Metal'] },
+  { label: 'Kertas', value: ['Paper'] },
+  { label: 'Kaca', value: ['Glass'] },
+  { label: 'Plastik', value: ['Plastic'] },
+  { label: 'Kertas + Plastik', value: ['Paper', 'Plastic'] },
+  { label: 'Kertas + Kaca', value: ['Paper', 'Glass'] },
+  { label: 'Kertas + Logam', value: ['Paper', 'Metal'] },
+  { label: 'Plastik + Kaca', value: ['Plastic', 'Glass'] },
+  { label: 'Plastik + Logam', value: ['Plastic', 'Metal'] },
+  { label: 'Kaca + Logam', value: ['Glass', 'Metal'] },
+  { label: 'Kertas + Plastik + Kaca', value: ['Paper', 'Plastic', 'Glass'] },
+  { label: 'Kertas + Plastik + Logam', value: ['Paper', 'Plastic', 'Metal'] },
+  { label: 'Kertas + Kaca + Logam', value: ['Paper', 'Glass', 'Metal'] },
+  { label: 'Plastik + Kaca + Logam', value: ['Plastic', 'Glass', 'Metal'] },
+  { label: 'Lengkap (Semua Jenis)', value: ['Paper', 'Plastic', 'Glass', 'Metal'] }
 ];
 
   return (
@@ -327,6 +362,35 @@ const cookingMethodOptions = [
                 color: '#1F2937',
               }}
             />
+
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
+              Alat Memasak
+            </Text>
+            <Dropdown
+              data={cookingMethodOptions}
+              labelField="label"
+              valueField="value"
+              placeholder="Pilih alat memasak"
+              value={cookingMethod}
+              onChange={item => setCookingMethod(item.value)}
+              style={{
+                backgroundColor: 'white',
+                borderColor: '#9EBC8A',
+                borderWidth: 1,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 16,
+              }}
+              placeholderStyle={{
+                fontSize: 14,
+                color: '#9CA3AF',
+              }}
+              selectedTextStyle={{
+                fontSize: 14,
+                color: '#1F2937',
+              }}
+            />
+
           </View>
 
           {/* Rumah dan Energi */}
@@ -416,12 +480,12 @@ const cookingMethodOptions = [
               Preferensi Transportasi
             </Text>
             <Dropdown
-              data={bodyTypeOptions}
+              data={transportOptions}
               labelField="label"
               valueField="value"
-              placeholder="Pilih tipe tubuh"
-              value={bodyType}
-              onChange={item => setBodyType(item.value)}
+              placeholder="Pilih transportasi utama"
+              value={transportPreference}
+              onChange={item => setTransportPreference(item.value)}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -444,12 +508,12 @@ const cookingMethodOptions = [
               Jenis Bahan Bakar Kendaraan
             </Text>
             <Dropdown
-              data={genderOptions}
+              data={vehicleTypeOptions}
               labelField="label"
               valueField="value"
-              placeholder="Pilih jenis kelamin"
-              value={gender}
-              onChange={item => setGender(item.value)}
+              placeholder="Pilih jenis bahan bakar"
+              value={vehicleType}
+              onChange={item => setVehicleType(item.value)}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -469,15 +533,16 @@ const cookingMethodOptions = [
             />
 
             <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
-              Jenis Kendaraan Bulanan
+              Jarak Kendaraan Bulanan
             </Text>
-            <Dropdown
-              data={showerFrequencyOptions}
-              labelField="label"
-              valueField="value"
-              placeholder="Pilih frekuensi mandi"
-              value={showerFrequency}
-              onChange={item => setShowerFrequency(item.value)}
+           <TextInput
+              placeholder="Masukkan jarak dalam KM"
+              value={distanceTraveled?.toString() || ''}
+              onChangeText={(text) => {
+                const value = text.replace(/[^0-9.]/g, '');
+                setDistanceTraveled(value ? parseFloat(value) : undefined);
+              }}
+              keyboardType="numeric"
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -485,12 +550,6 @@ const cookingMethodOptions = [
                 borderRadius: 12,
                 padding: 16,
                 marginBottom: 16,
-              }}
-              placeholderStyle={{
-                fontSize: 14,
-                color: '#9CA3AF',
-              }}
-              selectedTextStyle={{
                 fontSize: 14,
                 color: '#1F2937',
               }}
@@ -500,12 +559,12 @@ const cookingMethodOptions = [
               Frekuensi Perjalanan Udara
             </Text>
             <Dropdown
-              data={showerFrequencyOptions}
+              data={airTravelFrequencyOptions}
               labelField="label"
               valueField="value"
-              placeholder="Pilih frekuensi mandi"
-              value={showerFrequency}
-              onChange={item => setShowerFrequency(item.value)}
+              placeholder="Pilih frekuensi naik pesawat"
+              value={airTravelFrequency}
+              onChange={item => setAirTravelFrequency(item.value)}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -543,12 +602,12 @@ const cookingMethodOptions = [
               Ukuran Kantong Sampah
             </Text>
             <Dropdown
-              data={genderOptions}
+              data={wasteBagSizeOptions}
               labelField="label"
               valueField="value"
-              placeholder="Pilih jenis kelamin"
-              value={gender}
-              onChange={item => setGender(item.value)}
+              placeholder="Pilih ukuran kantong sampah"
+              value={wasteBagSize}
+              onChange={item => setWasteBagSize(item.value)}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -570,13 +629,14 @@ const cookingMethodOptions = [
             <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
               Jumlah Kantong Sampah per Minggu
             </Text>
-            <Dropdown
-              data={showerFrequencyOptions}
-              labelField="label"
-              valueField="value"
-              placeholder="Pilih frekuensi mandi"
-              value={showerFrequency}
-              onChange={item => setShowerFrequency(item.value)}
+            <TextInput
+              placeholder="Masukkan jumlah kantong sampah"
+              value={totalBags?.toString() || ''}
+              onChangeText={(text) => {
+                const value = text.replace(/[^0-9.]/g, '');
+                setTotalBags(value ? parseFloat(value) : undefined);
+              }}
+              keyboardType="numeric"
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -584,12 +644,6 @@ const cookingMethodOptions = [
                 borderRadius: 12,
                 padding: 16,
                 marginBottom: 16,
-              }}
-              placeholderStyle={{
-                fontSize: 14,
-                color: '#9CA3AF',
-              }}
-              selectedTextStyle={{
                 fontSize: 14,
                 color: '#1F2937',
               }}
@@ -599,12 +653,12 @@ const cookingMethodOptions = [
               Jenis Sampah yang Didaur Ulang
             </Text>
             <Dropdown
-              data={showerFrequencyOptions}
+              data={recyclingOptions}
               labelField="label"
               valueField="value"
-              placeholder="Pilih frekuensi mandi"
-              value={showerFrequency}
-              onChange={item => setShowerFrequency(item.value)}
+              placeholder="Pilih jenis daur ulang"
+              value={recyclingType}
+              onChange={item => setRecyclingType(item.value)}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -623,10 +677,104 @@ const cookingMethodOptions = [
               }}
             />
           </View>
-            
-        </View>
 
-        
+          {/* Elektronik dan Digital Section */}
+          <View className="flex-row items-center mb-4 pt-8">
+            <Image
+              source={require('@/assets/images/elektronik.png')}
+              style={{ width: 32, height: 32,  borderRadius: 16, marginRight: 8 }}
+              contentFit="contain"
+            />
+            <Text className="font-poppins-bold text-xl text-gray-800">
+              Elektronik dan Digital
+            </Text>
+          </View>
+
+          <View>
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
+              Waktu TV/PC Harian (Jam)
+            </Text>
+            <TextInput
+              placeholder="Masukkan jam per hari"
+              value={tvUsage?.toString() || ''}
+              onChangeText={(text) => {
+                const value = text.replace(/[^0-9.]/g, '');
+                setTvUsage(value ? parseFloat(value) : undefined);
+              }}
+              keyboardType="numeric"
+              style={{
+                backgroundColor: 'white',
+                borderColor: '#9EBC8A',
+                borderWidth: 1,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 16,
+                fontSize: 14,
+                color: '#1F2937',
+              }}
+            />
+            
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
+              Waktu Internet Harian (Jam)
+            </Text>
+            <TextInput
+              placeholder="Masukkan jam per hari"
+              value={internetUsage?.toString() || ''}
+              onChangeText={(text) => {
+                const value = text.replace(/[^0-9.]/g, '');
+                setInternetUsage(value ? parseFloat(value) : undefined);
+              }}
+              keyboardType="numeric"
+              style={{
+                backgroundColor: 'white',
+                borderColor: '#9EBC8A',
+                borderWidth: 1,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 16,
+                fontSize: 14,
+                color: '#1F2937',
+              }}
+            />
+          </View>
+
+          {/* Pakaian Section */}
+          <View className="flex-row items-center mb-4 pt-8">
+            <Image
+              source={require('@/assets/images/pakaian.png')}
+              style={{ width: 32, height: 32,  borderRadius: 16, marginRight: 8 }}
+              contentFit="contain"
+            />
+            <Text className="font-poppins-bold text-xl text-gray-800">
+             Pakaian
+            </Text>
+          </View>
+
+          <View>
+            <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
+              Jumlah Pakaian Baru per Bulan
+            </Text>
+            <TextInput
+              placeholder="Masukkan jumlah pakaian baru"
+              value={clothingPurchases?.toString() || ''}
+              onChangeText={(text) => {
+                const value = text.replace(/[^0-9.]/g, '');
+                setClothingPurchases(value ? parseFloat(value) : undefined);
+              }}
+              keyboardType="numeric"
+              style={{
+                backgroundColor: 'white',
+                borderColor: '#9EBC8A',
+                borderWidth: 1,
+                borderRadius: 12,
+                padding: 16,
+                marginBottom: 16,
+                fontSize: 14,
+                color: '#1F2937',
+              }}
+            />
+          </View>
+        </View>
 
         {/* Calculate Button */}
         <TouchableOpacity 
