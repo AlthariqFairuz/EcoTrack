@@ -4,6 +4,7 @@ import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import Toast from 'react-native-toast-message';
 
 export default function Calculator() {
   const [bodyType, setBodyType] = useState('');
@@ -25,6 +26,95 @@ export default function Calculator() {
   const [internetUsage, setInternetUsage] = useState<number | undefined>(undefined);
   const [clothingPurchases, setClothingPurchases] = useState<number | undefined>(undefined);
   const [cookingMethod, setCookingMethod] = useState('');
+  const [result, setResult] = useState<any>(null);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  const handleCalculateEmission = async () => {
+  // Validation
+  if (!bodyType || !gender || !dietType || !showerFrequency || 
+      !heatingEnergy || !energyEfficiency || !transportPreference || 
+      !airTravelFrequency || !wasteBagSize || !recyclingType || 
+      !cookingMethod || !socialActivity) {
+    Toast.show({
+      type: 'error',
+      text1: 'Form Tidak Lengkap',
+      text2: 'Mohon isi semua field yang diperlukan',
+    });
+    return;
+  }
+
+  if (monthlyGrocery === undefined || distanceTraveled === undefined || 
+      totalBags === undefined || tvUsage === undefined || 
+      internetUsage === undefined || clothingPurchases === undefined) {
+    Toast.show({
+      type: 'error',
+      text1: 'Data Numerik Kosong',
+      text2: 'Mohon isi semua field angka',
+    });
+    return;
+  }
+
+  setIsCalculating(true);
+
+  try {
+    const requestData = {
+      body_type: bodyType,
+      sex: gender,
+      diet: dietType,
+      how_often_shower: showerFrequency,
+      heating_energy_source: heatingEnergy,
+      transport: transportPreference,
+      vehicle_type: vehicleType || null,
+      social_activity: socialActivity,
+      monthly_grocery_bill: monthlyGrocery,
+      frequency_of_traveling_by_air: airTravelFrequency,
+      vehicle_monthly_distance_km: distanceTraveled,
+      waste_bag_size: wasteBagSize,
+      waste_bag_weekly_count: totalBags,
+      how_long_tv_pc_daily_hour: tvUsage,
+      how_many_new_clothes_monthly: clothingPurchases,
+      how_long_internet_daily_hour: internetUsage,
+      energy_efficiency: energyEfficiency,
+      recycling: recyclingType, 
+      cooking_with: cookingMethod
+    };
+
+    console.log('Sending data:', requestData);
+
+    const response = await fetch('http://172.16.0.2/predict', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestData),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    const resultData = await response.json();
+    setResult(resultData);
+
+    Toast.show({
+      type: 'success',
+      text1: 'Perhitungan Berhasil!'
+    });
+
+    console.log('Result:', resultData);
+
+  } catch (error) {
+    console.error('Error calculating emission:', error);
+    Toast.show({
+      type: 'error',
+      text1: 'Gagal Menghitung',
+      text2: error instanceof Error ? error.message : 'Terjadi kesalahan pada server',
+    });
+  } finally {
+    setIsCalculating(false);
+  }
+};
 
 
 const bodyTypeOptions = [
@@ -372,7 +462,7 @@ const recyclingOptions = [
               valueField="value"
               placeholder="Pilih alat memasak"
               value={cookingMethod}
-              onChange={item => setCookingMethod(item.value)}
+              onChange={item => {setCookingMethod(item.value); console.log(cookingMethod)}}
               style={{
                 backgroundColor: 'white',
                 borderColor: '#9EBC8A',
@@ -778,12 +868,41 @@ const recyclingOptions = [
 
         {/* Calculate Button */}
         <TouchableOpacity 
-          className="bg-[#537D5D] py-4 rounded-xl mx-2 mb-20"
-        >
-          <Text  style={{ color: 'white' }} className="text-white text-center font-poppins text-base">
-            Hitung Jejak Karbon
-          </Text>
-        </TouchableOpacity>
+        className={`py-4 rounded-xl mx-2 mb-20 ${isCalculating ? 'bg-gray-400' : 'bg-[#537D5D]'}`}
+        onPress={handleCalculateEmission}
+        disabled={isCalculating}
+      >
+        <Text style={{ color: 'white' }} className="text-white text-center font-poppins text-base">
+          {isCalculating ? 'Menghitung...' : 'Hitung Jejak Karbon'}
+        </Text>
+      </TouchableOpacity>
+
+      {result && (
+        <View className="bg-white rounded-xl p-4 mx-2 mb-20" style={{
+          shadowColor: '#000000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 6,
+          elevation: 3,
+        }}>
+          <View className="items-center">
+            <Text className="font-poppins-bold text-lg text-gray-800 mb-2">
+              Hasil Perhitungan
+            </Text>
+            <Text className="font-poppins-bold text-3xl mb-2" style={{ color: '#537D5D' }}>
+              {result.predicted_carbon_emission} kg CO₂e
+            </Text>
+            <Text className="font-poppins text-sm text-gray-600 text-center">
+              {result.message}
+            </Text>
+            <View className="mt-4 p-3 bg-orange-50 rounded-lg">
+              <Text className="font-poppins-medium text-sm text-orange-800 text-center">
+                💡 Rata-rata emisi harian orang Indonesia: 8.5 kg CO₂e
+              </Text>
+            </View>
+          </View>
+        </View>
+)}
       </ScrollView>
     </ThemedView>
   );
