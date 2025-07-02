@@ -69,6 +69,12 @@ export default function PengaturanPage() {
 
                 {/* Zona bahaya */}
                 <View className='flex flex-col mb-2'>
+                    <Text className='text-xl mb-3'>
+                        Zona Bahaya
+                    </Text>
+                    <Text className='mb-3'>
+                        Langkah ini bersifat permanen dan tidak dapat dibatalkan. Harap pastikan keputusanmu.
+                    </Text>
                     <TouchableOpacity 
                         className="bg-transparent border border-[#892424] py-4 px-[60px] rounded-[25px] w-full max-w-[300px] mb-4"
                         onPress={() => {}}

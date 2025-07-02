@@ -105,6 +105,21 @@ export default function AnalisisPage() {
                         </View>
                     </View>
                 </View>
+                <View>
+                    <Text className='text-xl mb-3 text-center'>
+                        Bagikan Prosesmu
+                    </Text>
+                    <Text className='mb-3 text-center'>
+                        Tunjukkan kepada temanmu bahwa kamu ikut berkontribusi untuk bumi!
+                    </Text>
+                    <TouchableOpacity 
+                        className="bg-[#537D5D] py-4 px-[60px] rounded-[25px] w-full max-w-[300px] mb-6"
+                        style={{backgroundColor: '#537D5D'}}
+                        onPress={() => {}}
+                        >
+                        <Text className="font-poppins-medium text-[16px] text-white text-center">Bagikan Pencapaian</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         </View>
     )

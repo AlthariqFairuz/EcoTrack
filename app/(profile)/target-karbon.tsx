@@ -7,6 +7,7 @@ import Toast from 'react-native-toast-message';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import { TargetCard } from '@/components/profile/TargetCard';
 import { ProgressCard } from '@/components/profile/ProgressCard';
+import { ChallengeRecCard } from '@/components/profile/ChallengeRecCard';
 
 export default function TargetKarbonPage() {
 
@@ -77,6 +78,7 @@ export default function TargetKarbonPage() {
                             Tetapkan Target untuk April 2025
                         </TouchableOpacity>
                     </View>
+                    {/* Prediksi AI */}
                     <View className='rounded-xl bg-[#C3DAF8] text-black'>
                         <View>
                             {/* Image */}
@@ -88,6 +90,44 @@ export default function TargetKarbonPage() {
                             Berdasarkan kebiasaanmu saat ini, target ini bisa dicapai. Dengan usaha yang konsisten, kamu bisa mencapainya dalam waktu 2-3 bulan.
                         </Text>
                     </View>
+                </View>
+
+                {/* Tantangan yang disarankan */}
+                <View className='flex flex-col mb-6'>
+                    <ChallengeRecCard
+                        title="Tantangan Bersepeda ke Kantor"
+                        description="Naik sepeda ke tempat kerja 3 kali minggu ini"
+                        badges={[
+                            {
+                            text: 'Hemat 8kg CO₂e',
+                            backgroundColor: '#C9D99E',
+                            textColor: '#3F6342',
+                            },
+                            {
+                            text: 'Sedang',
+                            backgroundColor: '#FBEAB6',
+                            textColor: '#A06C00',
+                            },
+                        ]}
+                        onAdd={() => {}} // fungsi untuk nambahin
+                    />
+                    <ChallengeRecCard
+                        title="Penghemat Energi"
+                        description="Mengurangi penggunaan energi rumah tangga 20%"
+                        badges={[
+                            {
+                            text: 'Hemat 15kg CO₂e',
+                            backgroundColor: '#C9D99E',
+                            textColor: '#3F6342',
+                            },
+                            {
+                            text: 'Sedang',
+                            backgroundColor: '#FBEAB6',
+                            textColor: '#A06C00',
+                            },
+                        ]}
+                        onAdd={() => {}} // fungsi untuk nambahin
+                    />
                 </View>
 
             </ScrollView>
