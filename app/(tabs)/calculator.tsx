@@ -81,7 +81,7 @@ export default function Calculator() {
 
     console.log('Sending data:', requestData);
 
-    const response = await fetch('http://172.16.0.2/predict', {
+    const response = await fetch('https://carbon-prediction-195352650485.asia-southeast2.run.app/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
