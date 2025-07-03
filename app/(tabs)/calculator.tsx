@@ -232,7 +232,7 @@ const recyclingOptions = [
   return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF3DA' }}>
       {/* Header */}
-      <Header title='Kalkulator Karbon' isOnDashboard={false}/>
+      <Header title='Kalkulator Karbon' isOnDashboard={true}/>
 
       <ScrollView className="flex-1 px-4 pt-8" showsVerticalScrollIndicator={false}>
         {/* Info Card */}

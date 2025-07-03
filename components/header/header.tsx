@@ -66,14 +66,9 @@ export default function Header({ title, prevPage, isOnDashboard }: HeaderProps) 
                     </View>
 
                     <View className="w-auto flex-row items-end gap-x-3 pb-2">
+                        {/* @TODO: UBAH KE PAGE NOTIFIKASI */}
                         <TouchableOpacity
-                            onPress={() => {
-                                if (prevPage) {
-                                    router.replace(prevPage as any);
-                                } else {
-                                    router.back();
-                                }
-                            }}
+                            onPress={() => {router.replace('/(tabs)');}}
                         >
                             <Image
                                 source={require('@/assets/images/notification.svg')}
@@ -82,14 +77,9 @@ export default function Header({ title, prevPage, isOnDashboard }: HeaderProps) 
                             />
                         </TouchableOpacity>
 
+                        {/* @TODO: UBAH KE PAGE PROFILE */}
                         <TouchableOpacity
-                            onPress={() => {
-                                if (prevPage) {
-                                    router.replace(prevPage as any);
-                                } else {
-                                    router.back();
-                                }
-                            }}
+                            onPress={() => {router.replace('/(tabs)');}}
                         >
                             <Image
                                 source={require('@/assets/images/profile.png')}
