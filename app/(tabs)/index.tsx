@@ -1,15 +1,15 @@
 import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import { useState, useEffect } from 'react';
-import { ThemedText } from '@/components/ThemedText';
+import { Text } from 'react-native';
 import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
-import Header from '@/components/header/header';
-import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -46,10 +46,8 @@ export default function DashboardScreen() {
     try {
       const storedName = await AsyncStorage.getItem('userName');
       if (storedName) {
-        // Update user data berdasarkan stored preferences
         setUserData(prev => ({
           ...prev,
-          // Bisa ditambahkan logic untuk load preferences dari AsyncStorage
         }));
       }
     } catch (error) {
@@ -73,13 +71,37 @@ export default function DashboardScreen() {
     }, 1000);
   };
 
+  const openChatbot = () => {
+    router.push('/chatbot');
+  };
+
   return (
-    <View className="flex-1 bg-orange-50">
+    <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
-      <Header 
-        title='Jakarta, Indonesia' 
-        isOnDashboard={true}
-      />
+      <LinearGradient
+        colors={['#537D5D', '#537D5D']}
+        className="pt-12 pb-5 px-5"
+      >
+        <View className="flex-row justify-between items-center">
+          <View className="flex-row items-center">
+            <MaterialIcons name="location-on" size={16} color="white" />
+            <Text className="text-white text-sm font-poppins ml-1">
+              Jakarta, Indonesia
+            </Text>
+          </View>
+          <View className="flex-row space-x-3">
+            <TouchableOpacity className="w-9 h-9 rounded-full bg-white/20 justify-center items-center">
+              <Ionicons name="notifications-outline" size={20} color="white" />
+            </TouchableOpacity>
+            <TouchableOpacity 
+              className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
+              onPress={handleLogout}
+            >
+              <FontAwesome5 name="user-circle" size={20} color="white" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      </LinearGradient>
 
       <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
@@ -94,9 +116,9 @@ export default function DashboardScreen() {
 
         {/* AI Recommendations */}
         <View className="mb-5">
-          <ThemedText className="text-lg font-poppins-bold text-gray-800 mb-4">
+          <Text className="text-lg font-poppins-bold text-gray-800 mb-4">
             Rekomendasi AI
-          </ThemedText>
+          </Text>
           <AIRecommendations userData={userData} />
         </View>
 
@@ -111,7 +133,7 @@ export default function DashboardScreen() {
 
       {/* Floating Chat Button */}
       <TouchableOpacity 
-        className="absolute bottom-20 right-5 w-14 h-14 rounded-full items-center justify-center shadow-lg"
+        className="absolute bottom-20 right-5 w-14 h-14 rounded-full items-center justify-center"
         style={{ 
           backgroundColor: '#537D5D',
           elevation: 8,
@@ -120,6 +142,8 @@ export default function DashboardScreen() {
           shadowOpacity: 0.3,
           shadowRadius: 8,
         }}
+        onPress={openChatbot}
+        activeOpacity={0.8}
       >
         <Ionicons name="chatbubble-outline" size={24} color="white" />
       </TouchableOpacity>
