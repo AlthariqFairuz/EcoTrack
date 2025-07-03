@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 
 interface Badge {
   text: string;
@@ -26,6 +26,7 @@ export function ChallengeRecCard({
         backgroundColor: '#FFFFFF',
         borderRadius: 16,
         padding: 16,
+        marginBottom: 12,
         flexDirection: 'row',
         alignItems: 'flex-start',
         shadowColor: '#000',

@@ -1,13 +1,9 @@
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router } from 'expo-router';
-import Toast from 'react-native-toast-message';
+import { ScrollView, Text, View } from 'react-native';
 
 // Components
+import { ChallengeRecCard } from '@/components/profile/ChallengeRecCard';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import { TargetCard } from '@/components/profile/TargetCard';
-import { ProgressCard } from '@/components/profile/ProgressCard';
-import { ChallengeRecCard } from '@/components/profile/ChallengeRecCard';
 
 export default function TargetKarbonPage() {
 
@@ -20,40 +16,46 @@ export default function TargetKarbonPage() {
 
                 {/* Target Aktif */}
                 <View className='flex flex-col mb-6'>
-                    <Text className='text-xl mb-3'>
+                    <Text className='text-2xl mb-3'>
                         Target Aktif
                     </Text>
-                    <View>
+                    <View className='flex-col'>
+                        <View className='mb-4'>
                         <TargetCard
-                            title="Pengurangan Karbon Bulanan"
-                            month="Maret 2024"
-                            status="Lancar"
-                            daysLeft={5}
-                            progress={18.2 / 25}
-                            currentValue={18.2}
-                            targetValue={25}
-                            feedback="Kemajuan luar biasa! Teruskan!"
-                        />
+                                title="Pengurangan Karbon Bulanan"
+                                month="Maret 2024"
+                                status="Lancar"
+                                daysLeft={5}
+                                progress={18.2 / 25}
+                                currentValue={18.2}
+                                targetValue={25}
+                                feedback="Kemajuan luar biasa! Teruskan!"
+                            />
+                        </View>
+                        <View className='mb-4'>
                         <TargetCard
-                            title="Pengurangan Karbon Bulanan"
-                            month="Maret 2024"
-                            status="Lancar"
-                            daysLeft={5}
-                            progress={18.2 / 25}
-                            currentValue={18.2}
-                            targetValue={25}
-                            feedback="Kemajuan luar biasa! Teruskan!"
-                        />
+                                title="Pengurangan Karbon Bulanan"
+                                month="Maret 2024"
+                                status="Lancar"
+                                daysLeft={5}
+                                progress={18.2 / 25}
+                                currentValue={18.2}
+                                targetValue={25}
+                                feedback="Kemajuan luar biasa! Teruskan!"
+                            />
+                        </View>
+                        <View className='mb-4'>
                         <TargetCard
-                            title="Pengurangan Karbon Bulanan"
-                            month="Maret 2024"
-                            status="Lancar"
-                            daysLeft={5}
-                            progress={18.2 / 25}
-                            currentValue={18.2}
-                            targetValue={25}
-                            feedback="Kemajuan luar biasa! Teruskan!"
-                        />
+                                title="Pengurangan Karbon Bulanan"
+                                month="Maret 2024"
+                                status="Lancar"
+                                daysLeft={5}
+                                progress={18.2 / 25}
+                                currentValue={18.2}
+                                targetValue={25}
+                                feedback="Kemajuan luar biasa! Teruskan!"
+                            />
+                        </View>
                     </View>
                 </View>
 
@@ -63,28 +65,67 @@ export default function TargetKarbonPage() {
                     <Text className='text-xl mb-3'>
                         Tentukan Target Bulanan Baru
                     </Text>
-                    <View className='rounded-xl shadow-md items-center justify-center'>
-                        <Text className='text-xl'>
-                            25%
-                        </Text>
-                        <Text className='text-xl'>
-                            Target pengurangan jejak karbon 
-                        </Text>
+                    <View
+                          style={{
+                            backgroundColor: 'white',
+                            borderRadius: 16,
+                            padding: 16,
+                            shadowColor: '#000',
+                            shadowOpacity: 0.1,
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowRadius: 4,
+                            elevation: 3,
+                          }}
+                        >
+                          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <View style={{ alignItems: 'center' }}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 24 }}>25%</Text>
+                                <Text style={{ marginTop: 2, color: '#555' }}>Target pengurangan jejak karbon</Text>
+                            </View>
+                            </View>
 
-                        {/* Progress bar */}
-
-
-                        <TouchableOpacity>
-                            Tetapkan Target untuk April 2025
-                        </TouchableOpacity>
-                    </View>
+                    
+                          {/* Progress bar */}
+                          <View
+                            style={{
+                              height: 16,
+                              backgroundColor: '#EFE9DD',
+                              borderRadius: 8,
+                              overflow: 'hidden',
+                              marginVertical: 20
+                            }}
+                          >
+                            <View
+                              style={{
+                                height: '100%',
+                                width: `${40}%`,
+                                backgroundColor: '#3F6342',
+                                borderRadius: 8,
+                              }}
+                            />
+                          </View>
+                    
+                          {/* Feedback */}
+                                  <View
+                                    style={{
+                                      backgroundColor: '#C8DB9D',
+                                      borderRadius: 16,
+                                      paddingHorizontal: 12,
+                                      paddingVertical: 4,
+                                    }}
+                                  >
+                                    <Text style={{ color: '#3F6342', fontWeight: '600' }}>Tetapkan Target untuk April 2025</Text>
+                                  </View>
+                        </View>
                     {/* Prediksi AI */}
-                    <View className='rounded-xl bg-[#C3DAF8] text-black'>
+                    <View className="bg-[#C3DAF8] rounded-2xl p-4 shadow mt-4">
                         <View>
                             {/* Image */}
-                            <Text>
-                                Prediksi AI
-                            </Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <View>
+                              <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Prediksi AI</Text>
+                            </View>
+                          </View>
                         </View>
                         <Text>
                             Berdasarkan kebiasaanmu saat ini, target ini bisa dicapai. Dengan usaha yang konsisten, kamu bisa mencapainya dalam waktu 2-3 bulan.
@@ -94,6 +135,9 @@ export default function TargetKarbonPage() {
 
                 {/* Tantangan yang disarankan */}
                 <View className='flex flex-col mb-6'>
+                    <Text className='text-xl mb-3'>
+                        Tantangan yang disarankan
+                    </Text>
                     <ChallengeRecCard
                         title="Tantangan Bersepeda ke Kantor"
                         description="Naik sepeda ke tempat kerja 3 kali minggu ini"
