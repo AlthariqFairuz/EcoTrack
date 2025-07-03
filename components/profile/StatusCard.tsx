@@ -1,6 +1,5 @@
-import { View, Text, Dimensions } from "react-native";
-import { ThemedText } from '@/components/ThemedText';
-import { Image } from 'expo-image'; 
+import { Image } from 'expo-image';
+import { Dimensions, Text, View } from "react-native";
 
 interface StatusCardProps {
     image: string;
@@ -17,7 +16,7 @@ export function StatusCard({
     description
 }: StatusCardProps) {
     return (
-        <View className="bg-white rounded-xl p-3 mb-3 shadow-lg"
+        <View className="bg-white rounded-xl p-3 mb-3 shadow-lg ml-4"
             style={{ width: cardWidth }}
         >
             <View className="flex-col">
