@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import {
   Text, View, ScrollView, Modal, Pressable, Alert, TextInput
 } from 'react-native';
@@ -47,12 +47,12 @@ export default function Track() {
     },
   ]);
 
-  const activityContent = [
+  const activityContent = useMemo(() => [
     { name: 'Transportasi', photo: require('@/assets/images/track/transportasi.svg') },
     { name: 'Makanan', photo: require('@/assets/images/track/makanan.svg') },
     { name: 'Energi', photo: require('@/assets/images/track/energy.svg') },
     { name: 'Belanja', photo: require('@/assets/images/track/belanja.svg') },
-  ];
+  ], []);
 
   function makeTime(hour: number, minute: number) {
     const date = new Date();
@@ -63,7 +63,7 @@ export default function Track() {
     return date;
   }
 
-  function getCarbonValue(): number {
+  const getCarbonValue = useCallback((): number => {
     const usage = parseFloat(param2 || '0');
 
     switch (typeActivity) {
@@ -78,7 +78,7 @@ export default function Track() {
       default:
         return 0;
     }
-  }
+  }, [typeActivity, param1, param2]);
 
   function calculateCarbonTransportation(
     distance: number,
@@ -103,7 +103,7 @@ export default function Track() {
     return (factor[level] || 0) * jumlah;
   }
 
-function handleAddActivity() {
+  const handleAddActivity = useCallback(() => {
     if (!activityName || !activityDesc || !param1 || !param2) {
         Alert.alert('Harap isi semua input');
         return;
@@ -145,9 +145,9 @@ function handleAddActivity() {
     setParam1('');
     setParam2('');
     setModalVisible(false);
-}
+  }, [activityName, activityDesc, param1, param2, typeActivity, getCarbonValue, isEditing, activityData]);
 
-  function handleDeleteActivity(index: number) {
+  const handleDeleteActivity = useCallback((index: number) => {
     Alert.alert('Hapus Aktivitas?', '', [
       { text: 'Batal', style: 'cancel' },
       {
@@ -155,9 +155,22 @@ function handleAddActivity() {
         onPress: () => setActivityData(prev => prev.filter((_, i) => i !== index))
       }
     ]);
-  }
+  }, []);
 
-  const DropdownInput = ({ label, data, value, onChange }: any) => (
+  const transportationData = useMemo(() => [
+    { label: 'Mobil', value: 'car' },
+    { label: 'Bus', value: 'bus' },
+    { label: 'Sepeda', value: 'bike' },
+    { label: 'Jalan Kaki', value: 'walk' },
+  ], []);
+
+  const categoryData = useMemo(() => [
+    { label: 'Berat', value: 'Berat' },
+    { label: 'Sedang', value: 'Sedang' },
+    { label: 'Ringan', value: 'Ringan' },
+  ], []);
+
+  const DropdownInput = useCallback(({ label, data, value, onChange }: any) => (
     <Dropdown
         data={data}
         labelField="label"
@@ -189,9 +202,9 @@ function handleAddActivity() {
             borderRadius: 8,
         }}
     />
-);
+  ), []);
 
-    const NumericInput = ({ placeholder, value, onChange }: any) => (
+  const NumericInput = useCallback(({ placeholder, value, onChange }: any) => (
     <TextInput
         className="border border-[#537D5D] rounded-md px-3 py-2 w-full mb-3 text-black bg-orange-50"
         placeholder={placeholder}
@@ -199,10 +212,32 @@ function handleAddActivity() {
         keyboardType="numeric"
         value={value}
         onChangeText={onChange}
+        blurOnSubmit={false}
+        autoCorrect={false}
+        autoCapitalize="none"
     />
-    );
+  ), []);
 
-  const totalCarbon = activityData.reduce((sum, act) => sum + act.carbon, 0).toFixed(2);
+  const totalCarbon = useMemo(() => 
+    activityData.reduce((sum, act) => sum + act.carbon, 0).toFixed(2)
+  , [activityData]);
+
+  const yesterDayCarbon = 100;
+
+  const handleModalClose = useCallback(() => {
+    setModalVisible(false);
+    setIsEditing(false);
+    setTypeActivity('');
+    setActivityName('');
+    setActivityDesc('');
+    setParam1('');
+    setParam2('');
+  }, []);
+
+  const handleActivityTypePress = useCallback((itemName: string) => {
+    setTypeActivity(itemName);
+    setModalVisible(true);
+  }, []);
 
   return (
     <View className="flex-1 bg-orange-50">
@@ -217,10 +252,7 @@ function handleAddActivity() {
               <ActivityType
                 key={idx}
                 activityType={item}
-                onPress={() => {
-                  setTypeActivity(item.name);
-                  setModalVisible(true);
-                }}
+                onPress={() => handleActivityTypePress(item.name)}
               />
             ))}
           </View>
@@ -242,19 +274,8 @@ function handleAddActivity() {
                   setTypeActivity(item.type);
                   setActivityName(item.name);
                   setActivityDesc(item.description);
-                  if (item.type === 'Transportasi') {
-                    setParam1(item.param1);
-                    setParam2(item.param2.toString());
-                  } else if (item.type === 'Makanan') {
-                    setParam1(item.param1);
-                    setParam2(item.param2.toString());
-                  } else if (item.type === 'Energi') {
-                    setParam1(item.param1);
-                    setParam2(item.param2.toString());
-                  } else if (item.type === 'Belanja') {
-                    setParam1(item.param1);
-                    setParam2(item.param2.toString());
-                  }
+                  setParam1(item.param1);
+                  setParam2(item.param2.toString());
                 }}
                 handleDelete={() => handleDeleteActivity(index)}
               />
@@ -269,8 +290,8 @@ function handleAddActivity() {
         <View className="p-2 mb-10 items-center">
           <TotalEmision totalEmision={{
             value: totalCarbon,
-            changesValue: '15',
-            isIncrease: false,
+            changesValue: Math.abs(parseFloat(totalCarbon) - yesterDayCarbon).toFixed(2),
+            isIncrease: parseFloat(totalCarbon) > yesterDayCarbon,
           }} />
         </View>
       </ScrollView>
@@ -279,7 +300,7 @@ function handleAddActivity() {
         transparent
         animationType="slide"
         visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
+        onRequestClose={handleModalClose}
       >
         <View className="flex-1 justify-center items-center bg-black/40">
           <View className="m-5 bg-white rounded-xl p-8 w-11/12">
@@ -291,6 +312,9 @@ function handleAddActivity() {
               placeholderTextColor="#537D5D"
               value={activityName}
               onChangeText={setActivityName}
+              blurOnSubmit={false}
+              autoCorrect={false}
+              autoCapitalize="sentences"
             />
             <TextInput
               className="border border-[#537D5D] rounded-md px-3 py-2 w-full mb-3 text-black bg-orange-50"
@@ -300,65 +324,51 @@ function handleAddActivity() {
               onChangeText={setActivityDesc}
               multiline
               numberOfLines={3}
+              blurOnSubmit={false}
+              autoCorrect={false}
+              autoCapitalize="sentences"
             />
 
-            {(typeActivity === 'Transportasi') && (
+            {typeActivity === 'Transportasi' && (
               <>
                 <DropdownInput
-                label="Moda Transportasi"
-                value={param1}
-                onChange={setParam1}
-                data={[
-                    { label: 'Mobil', value: 'car' },
-                    { label: 'Bus', value: 'bus' },
-                    { label: 'Sepeda', value: 'bike' },
-                    { label: 'Jalan Kaki', value: 'walk' },
-                ]}
+                  label="Moda Transportasi"
+                  value={param1}
+                  onChange={setParam1}
+                  data={transportationData}
                 />
                 <NumericInput placeholder="Jarak (km)" value={param2} onChange={setParam2} />
               </>
             )}
-            {(typeActivity === 'Makanan') && (
+            {typeActivity === 'Makanan' && (
               <>
                 <DropdownInput
-                label="Jenis Makanan"
-                value={param1}
-                onChange={setParam1}
-                data={[
-                    { label: 'Berat', value: 'Berat' },
-                    { label: 'Sedang', value: 'Sedang' },
-                    { label: 'Ringan', value: 'Ringan' },
-                ]}
+                  label="Jenis Makanan"
+                  value={param1}
+                  onChange={setParam1}
+                  data={categoryData}
                 />
                 <NumericInput placeholder="Jumlah Porsi" value={param2} onChange={setParam2} />
               </>
             )}
-            {(typeActivity === 'Energi') && (
+            {typeActivity === 'Energi' && (
               <>
                 <DropdownInput
-                label="Jenis Energi"
-                value={param1}
-                onChange={setParam1}
-                data={[
-                    { label: 'Berat', value: 'Berat' },
-                    { label: 'Sedang', value: 'Sedang' },
-                    { label: 'Ringan', value: 'Ringan' },
-                ]}
+                  label="Jenis Energi"
+                  value={param1}
+                  onChange={setParam1}
+                  data={categoryData}
                 />
                 <NumericInput placeholder="Konsumsi (kWh)" value={param2} onChange={setParam2} />
               </>
             )}
-            {(typeActivity === 'Belanja') && (
+            {typeActivity === 'Belanja' && (
               <>
                 <DropdownInput
-                label="Jenis Belanja"
-                value={param1}
-                onChange={setParam1}
-                data={[
-                    { label: 'Berat', value: 'Berat' },
-                    { label: 'Sedang', value: 'Sedang' },
-                    { label: 'Ringan', value: 'Ringan' },
-                ]}
+                  label="Jenis Belanja"
+                  value={param1}
+                  onChange={setParam1}
+                  data={categoryData}
                 />
                 <NumericInput placeholder="Jumlah Barang" value={param2} onChange={setParam2} />
               </>
@@ -368,19 +378,13 @@ function handleAddActivity() {
               className="rounded-lg px-4 py-2 mt-4 bg-[#537D5D] w-full"
               onPress={handleAddActivity}
             >
-              <Text className="text-white text-center">Tambah Track</Text>
+              <Text className="text-white text-center">
+                {isEditing ? 'Update Track' : 'Tambah Track'}
+              </Text>
             </Pressable>
             <Pressable
               className="rounded-lg px-4 py-2 mt-2 bg-red-500 w-full"
-              onPress={() => {
-                setModalVisible(false);
-                setIsEditing(false);
-                setTypeActivity('');
-                setActivityName('');
-                setActivityDesc('');
-                setParam1('');
-                setParam2('');
-              }}
+              onPress={handleModalClose}
             >
               <Text className="text-white text-center">Batal</Text>
             </Pressable>
