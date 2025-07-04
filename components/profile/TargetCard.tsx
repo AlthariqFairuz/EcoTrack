@@ -1,3 +1,4 @@
+import { MaterialIcons } from '@expo/vector-icons';
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -10,6 +11,7 @@ interface TargetCardProps {
   currentValue: number;
   targetValue: number;
   feedback: string;
+  isGreen: boolean;
 }
 
 export function TargetCard({
@@ -21,13 +23,14 @@ export function TargetCard({
   currentValue,
   targetValue,
   feedback,
+  isGreen,
 }: TargetCardProps) {
   return (
     <View
       style={{
         backgroundColor: 'white',
-        borderRadius: 16,
-        padding: 16,
+        borderRadius: 12,
+        padding: 12,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 2 },
@@ -36,33 +39,51 @@ export function TargetCard({
       }}
     >
       {/* Header */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-        <View>
-          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{title}</Text>
-          <Text style={{ marginTop: 2, color: '#555' }}>{month}</Text>
-        </View>
-        <View
-          style={{
-            backgroundColor: '#C8DB9D',
-            borderRadius: 16,
-            paddingHorizontal: 12,
-            paddingVertical: 4,
-          }}
-        >
-          <Text style={{ color: '#3F6342', fontWeight: '600' }}>{status}</Text>
-        </View>
-      </View>
+      <View className="flex-row justify-between items-center">
 
-      {/* Middle row */}
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 12 }}>
-        <Text style={{ color: '#000' }}>Proses</Text>
-        <Text style={{ color: '#000' }}>Sisa waktu: {daysLeft} hari</Text>
+        <View className='flex-col'>
+          <View className='flex-row justify-between items-center w-full'>
+            <View className='flex-col'>
+              <Text className='font-poppins-medium text-[12px] text-black '>{title}</Text>
+              <Text className='font-poppins text-[11px] text-black '>{month}</Text>
+            </View>
+
+            <View
+              style={{
+              backgroundColor: isGreen ? '#C8DB9D' : '#D9534F',
+              borderRadius: 16,
+              paddingHorizontal: 12,
+              paddingVertical: 4,
+              }}
+            >
+              <Text
+              className='font-poppins text-[11px]'
+              style={{ color: isGreen ? '#2E5538' : '#ffffff' }}
+              >
+              {status}
+              </Text>
+            </View>
+          </View>
+
+          <View className="items-end mt-2">
+            <Text className="text-black text-end font-poppins text-[10px]">Sisa waktu: {daysLeft} hari</Text>
+          </View>
+
+        </View>
+
+
       </View>
 
       {/* Progress text */}
-      <Text style={{ marginTop: 4, alignSelf: 'flex-end', color: '#000' }}>
-        {currentValue}/{targetValue} kg CO₂e
-      </Text>
+      <View className="flex-row justify-between items-center mt-2">
+        <Text className="mt-1 self-end text-black font-poppins text-[12px]">
+          Proses
+        </Text>
+        <Text className="mt-1 self-end text-black font-poppins text-[12px]">
+          {currentValue}/{targetValue} kg CO₂e
+        </Text>
+      </View>
+
 
       {/* Progress bar */}
       <View
@@ -71,23 +92,28 @@ export function TargetCard({
           backgroundColor: '#EFE9DD',
           borderRadius: 8,
           overflow: 'hidden',
-          marginTop: 4,
+          marginTop: 2,
         }}
       >
         <View
           style={{
-            height: '100%',
-            width: `${progress * 100}%`,
-            backgroundColor: '#3F6342',
-            borderRadius: 8,
+        height: '100%',
+        width: `${progress * 100}%`,
+        backgroundColor: isGreen ? '#3F6342' : '#D9534F',
+        borderRadius: 8,
           }}
         />
       </View>
 
       {/* Feedback */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
-        <Text style={{ fontSize: 14, color: '#3F6342', marginRight: 4 }}>↘</Text>
-        <Text style={{ fontSize: 14, color: '#000' }}>{feedback}</Text>
+      <View className="flex-row items-center mt-1">
+        <MaterialIcons
+          name={"trending-up"}
+          size={16}
+          color={"#537D5D"}
+          style={{ marginRight: 6 }}
+        />
+        <Text className="text-black font-poppins text-[11px]">{feedback}</Text>
       </View>
     </View>
   );

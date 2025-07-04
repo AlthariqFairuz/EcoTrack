@@ -22,43 +22,35 @@ export function ChallengeRecCard({
 }: ChallengeRecCardProps) {
   return (
     <View
+      className="bg-white rounded-2xl p-4 mb-3 flex-row items-center shadow-sm"
       style={{
-        backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 12,
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
-        elevation: 2,
+      shadowColor: '#000',
+      shadowOpacity: 0.05,
+      shadowOffset: { width: 0, height: 2 },
+      shadowRadius: 4,
+      elevation: 2,
       }}
     >
       {/* Content */}
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginBottom: 4 }}>
+      <View className='flex-1 mr-4'>
+        <Text className='font-poppins-medium text-[12px] text-black'>
           {title}
         </Text>
-        <Text style={{ color: '#333', marginBottom: 12 }}>{description}</Text>
+        <Text className='font-poppins text-[11px] text-black'>{description}</Text>
 
         {/* Badges */}
-        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
+        <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 , marginTop: 8 }}>
           {badges.map((badge, index) => (
             <View
               key={index}
-              style={{
-                backgroundColor: badge.backgroundColor,
-                paddingHorizontal: 12,
-                paddingVertical: 6,
-                borderRadius: 12,
-                marginRight: 8,
-                marginBottom: 8,
-              }}
+              className="px-3 py-1.5 rounded-xl mr-2 mb-2"
+              style={{ backgroundColor: badge.backgroundColor }}
             >
-              <Text style={{ color: badge.textColor, fontWeight: '600' }}>
-                {badge.text}
+              <Text
+              className="font-poppins-medium text-[11px]"
+              style={{ color: badge.textColor }}
+              >
+              {badge.text}
               </Text>
             </View>
           ))}
@@ -69,7 +61,7 @@ export function ChallengeRecCard({
       <TouchableOpacity
         onPress={onAdd}
       >
-        <Text style={{ color: '#67836C', fontWeight: '500' }}>Tambah</Text>
+        <Text className='font-poppins-medium text-[12px] text-[#537D5D]'>Tambah</Text>
       </TouchableOpacity>
     </View>
   );

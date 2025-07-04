@@ -16,7 +16,7 @@ export default function Community() {
     }
     const communityContents = [
         {
-            name: 'Dinda',
+            name: 'Radhi',
             images: require('@/assets/images/community/profile-picture/gojo.jpg'),
             description: 'Minggu ke-3 bersepeda ke ITB selesai! Aku berhasil menghemat 23kg CO₂e dan menemukan kedai matcha di sepanjang rute.',
             time: '2',
@@ -25,7 +25,7 @@ export default function Community() {
             comments: 3,
         },
         {
-            name: 'Radhi',
+            name: 'Putri',
             images: require('@/assets/images/community/profile-picture/nezuko.jpg'),
             description: 'Hari ini ga ke mana-mana, nonton anime seharian. Tanpa transportasi, tanpa AC besar, hanya kipas angin dan mie instan.',
             time: '5',
