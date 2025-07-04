@@ -59,7 +59,6 @@ class CarbonEmissionInput(BaseModel):
     recycling: List[str]  
     cooking_with: List[str]
 
-
 class CarbonEmissionOutput(BaseModel):
     predicted_carbon_emission: float
     status: str

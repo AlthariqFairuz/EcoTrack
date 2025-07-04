@@ -403,7 +403,7 @@ const recyclingOptions = [
             />
 
             <Text className="text-sm font-poppins-semibold text-gray-700 mb-2">
-              Tagihan Belanja Bulanan
+              Tagihan Belanja Bulanan (dalam US$)
             </Text>
             <TextInput
               placeholder="Masukkan tagihan belanja bulanan"

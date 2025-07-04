@@ -1,0 +1,6 @@
+opencv-python==4.10.0.84
+uvicorn==0.34.0
+easyocr==1.7.2
+numpy==1.26.4
+fastapi==0.115.8
+pillow==10.2.0
