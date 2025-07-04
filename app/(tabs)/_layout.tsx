@@ -17,9 +17,10 @@ export default function TabLayout() {
         top: -25,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 70,
-        height: 70,
-        marginBottom: 20,
+        alignSelf: 'center',
+        // width: 70,
+        // height: 70,
+        marginBottom: 10,
       }}>
         <TouchableOpacity
           style={{
@@ -71,7 +72,7 @@ export default function TabLayout() {
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: {
-          height: 80,
+          height: 90,
           paddingBottom: Platform.OS === 'ios' ? 20 : 10,
           paddingTop: 10,
           backgroundColor: 'white',
