@@ -7,18 +7,18 @@ import { Image } from 'expo-image';
 export default function StartScreen() {
   const handleLogin = async () => {
     await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-    router.replace('/(tabs)');
+    router.replace('/(auth)/login')
   };
 
   const handleRegister = async () => {
     await AsyncStorage.setItem('hasSeenOnboarding', 'true');
-    router.replace('/(tabs)');
+    router.replace('/(auth)/signup');
   };
 
   return (
     <View className="flex-1 bg-[#FAF6E9]">
       <View className="flex-1 justify-center items-center px-10">
-        <View className="mb-12">
+          <View style={{ marginTop: '10%' }} className="w-full justify-center items-center">
             <Image
               source={require('@/assets/images/logo.png')}
               style={{ width: 350, height: 250 }}

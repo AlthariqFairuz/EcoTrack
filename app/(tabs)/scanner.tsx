@@ -1,12 +1,12 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const Calculator = () => {
+const Scanner = () => {
     return (
         <View>
-            <Text>Kalkulator</Text>
+            <Text>Scanner</Text>
         </View>
     );
 };
 
-export default Calculator;
+export default Scanner;

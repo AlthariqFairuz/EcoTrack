@@ -1,20 +1,22 @@
 import { View, TouchableOpacity, Text } from 'react-native';
 import { router } from 'expo-router';
 import { Image } from 'expo-image'; 
+import { useDebouncedPress } from '@/hooks/useDebounce';
 
 export default function Welcome2() {
-  const handleNext = () => {
+  const debouncedNext = useDebouncedPress(() => {
     router.push('/welcome-3');
-  };
+  }, 2000);
 
-  const handleSkip = () => {
+  const debouncedSkip = useDebouncedPress(() => {
+    router.dismissAll();
     router.replace('/start');
-  };
+  }, 2000);
 
   return (
     <View className="flex-1 bg-[#FAF6E9]">
       <View className="items-end pt-[60px] pr-5">
-        <TouchableOpacity onPress={handleSkip}>
+        <TouchableOpacity onPress={debouncedSkip}>
           <Text className="font-poppins text-[15px] text-[#575757]">Lewati</Text>
         </TouchableOpacity>
       </View>
@@ -47,7 +49,7 @@ export default function Welcome2() {
 
         <TouchableOpacity 
           className="bg-[#537D5D] py-4 px-[60px] rounded-[25px] w-full max-w-[300px]"
-          onPress={handleNext}
+          onPress={debouncedNext}
         >
           <Text className="font-poppins-medium text-[17px] text-white text-center">Selanjutnya</Text>
         </TouchableOpacity>
