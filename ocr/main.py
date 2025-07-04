@@ -1,25 +1,17 @@
 import io
 import re
+
 import cv2
 import easyocr
 import numpy as np
 import uvicorn
 from fastapi import FastAPI, File, HTTPException, UploadFile
-from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image
 
 app = FastAPI(title="EcoTrack OCR Service",
     description="API untuk fitur scanner",
     version="1.0.0"
     )
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 reader = easyocr.Reader(['en', 'id'])
 
@@ -61,45 +53,30 @@ class OCRService:
         return text_data
     
     def parse_receipt(self, text_data):
-        """Parse receipt text to extract items and prices"""
-        items = []
+        """Parse receipt text to extract only food names based on keywords"""
         
+        food_keywords = [
+            'daging', 'ayam', 'sapi', 'kambing', 'meat', 'chicken', 'beef',
+            'susu', 'keju', 'yogurt', 'milk', 'cheese', 'protein', 'nasi', 'mie',  
+            'sayur', 'buah', 'tomat', 'vegetable', 'fruit'  
+        ]
+        
+        food_counts = {}
         full_text = ' '.join([item['text'] for item in text_data])
-        lines = full_text.split('\n')
         
-        for line in lines:
-            line = line.strip()
-            if not line:
-                continue
-                
-            price_patterns = [
-                r'Rp\s*([0-9.,]+)',
-                r'([0-9]+[.,][0-9]+)',
-                r'([0-9]{3,})'
-            ]
-            
-            for pattern in price_patterns:
-                price_match = re.search(pattern, line)
-                if price_match:
-                    # item name ( before price)
-                    item_text = re.sub(pattern, '', line).strip()
-                    if len(item_text) > 3:  
-                        price_str = price_match.group(1).replace(',', '').replace('.', '')
-                        try:
-                            price = float(price_str)
-                            items.append({
-                                'name': item_text,
-                                'price': price,
-                                'line': line
-                            })
-                        except ValueError:
-                            continue
-                    break
+        words = re.sub(r'[0-9.,Rp\-X\n]+', ' ', full_text).split()
         
-        return items
-    
-    def calculate_carbon_footprint(self, items):
-        """Ini random carbon footprint based on item categories"""
+        for word in words:
+            word = word.strip().lower()
+            if len(word) > 2:
+                if word in [food.lower() for food in food_keywords]:
+                    food_names = word.capitalize()
+                    food_counts[food_names] = food_counts.get(food_names, 0) + 1
+        
+        return food_counts
+
+    def calculate_carbon_footprint(self, food_counts):
+        """Calculate carbon footprint for detected food names"""
         
         carbon_factors = {
             'meat': 5.5,  
@@ -111,24 +88,24 @@ class OCRService:
         
         total_carbon = 0
         categorized_items = []
-        print (items)
-        for item in items:
-            category = self.categorize_item(item['name'])
-
-            estimated_weight = item['price'] / 15000  # asumsi Rp 15,000 per kg aja
-            carbon = estimated_weight * carbon_factors.get(category, carbon_factors['default'])
+        
+        for food_name, count in food_counts.items():
+            category = self.categorize_item(food_name)
+            estimated_weight = 0.3  # 300g per item makanan asumsi
+            carbon_per_item = estimated_weight * carbon_factors.get(category, carbon_factors['default'])
+            total_carbon_item = carbon_per_item * count
             
             categorized_items.append({
-                'name': item['name'],
+                'name': food_name,
                 'category': category,
-                'estimated_weight': round(estimated_weight, 2),
-                'carbon_footprint': round(carbon, 2),
-                'price': item['price']
+                'estimated_weight': estimated_weight,
+                'carbon_footprint': round(total_carbon_item, 2)
             })
             
-            total_carbon += carbon
+            total_carbon += total_carbon_item
         
         return categorized_items, round(total_carbon, 2)
+
     
     def categorize_item(self, item_name):
         """Categorize food items"""
@@ -161,7 +138,6 @@ async def scan_receipt(file: UploadFile = File(...)):
         # extract text using EasyOCR
         text_data = ocr_service.extract_text_easyocr(image_array)
         
-        # Parse receipt
         items = ocr_service.parse_receipt(text_data)
         
         if not items:
@@ -180,7 +156,7 @@ async def scan_receipt(file: UploadFile = File(...)):
             "total_carbon_footprint": total_carbon,
             "items": categorized_items,
             "item_count": len(categorized_items),
-            "raw_text": [item['text'] for item in text_data[:5]]  
+            "raw_text": [item['text'] for item in text_data]  
         }
         
     except Exception as e:
