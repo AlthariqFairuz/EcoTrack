@@ -5,6 +5,8 @@ import { CommunityComments } from '@/components/dashboard/CommunityComments';
 import ShareActionCard from '@/components/dashboard/ShareAction';
 import Header from '@/components/header/header';
 import Toast from 'react-native-toast-message';
+import PageWrapper from '@/components/PageWrapper';
+import { ThemedView } from '@/components/ThemedView';
 
 export default function Community() {
 
@@ -44,12 +46,11 @@ export default function Community() {
         },
     ]
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF6E9' }}>
-            <Header title="Komunitas" isOnDashboard={true} />
-            <ScrollView
-                contentContainerStyle={{ padding: 24, paddingBottom: 60 }}
-                showsVerticalScrollIndicator={false}
-            >
+    <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
+      {/* Header */}
+      <Header title='Komunitas' isOnDashboard={false}/>
+
+      <PageWrapper className="px-4 pt-8">
                 {/* Tantangan Aktif */}
                 <View style={{ marginBottom: 24 }}>
                     <Text className='font-poppins-medium text-[20px] text-black'>
@@ -115,7 +116,7 @@ export default function Community() {
                     </View>
                 </View>
 
-            </ScrollView>
-        </SafeAreaView>
+            </PageWrapper>
+        </ThemedView>
     );
 }
