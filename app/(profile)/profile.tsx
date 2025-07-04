@@ -102,7 +102,7 @@ export default function ProfilePage() {
                 {/* onPress tiap button belum dihandle */}
                 <View className="flex flex-col bg-white rounded-xl">
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => router.replace('/(profile)/target-karbon')}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
                         <View className='flex-row items-center'>
@@ -117,7 +117,7 @@ export default function ProfilePage() {
                     <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
 
                     <TouchableOpacity
-                        onPress={() => {}}
+                        onPress={() => router.replace('/(profile)/pengaturan')}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
                         <View className='flex-row items-center'>
@@ -132,7 +132,7 @@ export default function ProfilePage() {
                     <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
 
                     <TouchableOpacity
-                        onPress={() => {}}
+                        // onPress={() => router.replace('/(profile)/faq')}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
                         <View className='flex-row items-center'>

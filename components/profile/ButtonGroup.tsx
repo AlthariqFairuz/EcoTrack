@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { router } from 'expo-router';
+import { Image } from 'expo-image';
 
 interface MenuItem {
+  image: string;
   name: string;
-  route: string;
+  route?: string;
 }
 
 interface MenuButtonListProps {
@@ -25,7 +27,7 @@ export function MenuButtonList({ items }: MenuButtonListProps) {
       {items.map((item, index) => (
         <React.Fragment key={item.name}>
           <TouchableOpacity
-            onPress={() => router.push(item.route as any)}
+            onPress={() => router.push(item.route as any || '')}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -33,9 +35,14 @@ export function MenuButtonList({ items }: MenuButtonListProps) {
               paddingVertical: 16,
             }}
           >
-            <ThemedText style={{ fontSize: 14, color: '#333' }}>
+            <Image
+              source={item.image}
+              style={{ width: 22, height: 22, marginRight: 8, tintColor: 'black' }}
+              contentFit="contain"
+            />
+            <Text className="text-[12px] font-poppins-medium text-[#323232]">
               {item.name}
-            </ThemedText>
+            </Text>
           </TouchableOpacity>
 
           {index !== items.length - 1 && (

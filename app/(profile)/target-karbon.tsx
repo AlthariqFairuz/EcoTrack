@@ -4,13 +4,14 @@ import { ScrollView, Text, View } from 'react-native';
 import { ChallengeRecCard } from '@/components/profile/ChallengeRecCard';
 import ProfileHeader from '@/components/profile/ProfileHeader';
 import { TargetCard } from '@/components/profile/TargetCard';
+import Header from '@/components/header/header';
 
 export default function TargetKarbonPage() {
 
     return (
-        <View className='bg-[#FAF6E9]'>
+        <View className='flex-1 bg-[#FAF6E9]'>
 
-            <ProfileHeader title='Target Karbon' isOnProfile={false} />
+            <Header title='Target Karbon' prevPage='/(profile)' isOnDashboard={false} />
 
             <ScrollView className='flex p-4 px-8'>
 
