@@ -2,13 +2,14 @@ import { View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import Toast from 'react-native-toast-message';
+import { Image } from 'expo-image';
+
 
 // Components
-import ProfileHeader from '@/components/profile/ProfileHeader';
 import { ProfileBanner } from '@/components/profile/ProfileBanner';
 import { BadgeCard } from '@/components/profile/BadgeCard';
 import { AchievementCard } from '@/components/profile/AchievementCard';
-import { ThemedText } from '@/components/ThemedText';
+import Header from '@/components/header/header';
 
 export default function ProfilePage() {
 
@@ -30,11 +31,11 @@ export default function ProfilePage() {
   };
 
     return (
-        <View className='bg-[#FAF6E9]'>
+        <View className=' flex-1 bg-[#FAF6E9]'>
 
-            <ProfileHeader title='Profil' isOnProfile={true} />
+            <Header title='Profil' prevPage='/(tabs)' isOnDashboard={false} />
 
-            <ScrollView className='flex p-4 px-8'>
+            <ScrollView className='flex-1 p-4 px-8'>
 
                 <ProfileBanner/>
 
@@ -42,25 +43,25 @@ export default function ProfilePage() {
                 <View className='flex-row items-center mb-2 mt-4 justify-center ml-4'>
                     <View className='flex mr-4'>
                         <AchievementCard
-                            image='@/assets/images/profile.png'
+                            image={require('@/assets/images/profile/pencapaian.svg')}
                             totalAch={10}
                             description='Pencapaian'
                         />
                         <AchievementCard
-                            image='@/assets/images/profile.png'
+                            image={require('@/assets/images/profile/streak.svg')}
                             totalAch={7}
                             description='Streak Saat ini'
                         />
                     </View>
                     <View className='flex mr-4'>
                         <AchievementCard
-                            image='@/assets/images/profile.png'
-                            totalAch={23}
+                            image={require('@/assets/images/profile/target.svg')}
+                            totalAch='#23'
                             description='Di Jakarta'
                         />
                         <AchievementCard
-                            image='@/assets/images/profile.png'
-                            totalAch={156}
+                            image={require('@/assets/images/profile/hemat.svg')}
+                            totalAch='156 kg'
                             description='Dihemat Bulan ini'
                         />
                     </View>
@@ -68,24 +69,29 @@ export default function ProfilePage() {
 
                 {/* Penacapaian */}
                 <View className='flex flex-col mb-6'>
-                    <Text className='text-xl text-black mb-4 mt-4'>
-                        Pencapaian Terbaru
-                    </Text>
+                    <View className='flex flex-row justify-between items-center'>
+                        <Text className='font-poppins-medium text-[16px] text-black mb-4 mt-4'>
+                            Pencapaian Terbaru
+                        </Text>
+                        <Text className='font-poppins-medium text-[12px] text-black mb-4 mt-4'>
+                            Lihat semua
+                        </Text>
+                    </View>
                     <View className='flex flex-row flex-wrap justify-between'>
                         <BadgeCard
-                            image='@/assets/images/profile.png'
-                            description='Pejuang'
+                            image={require('@/assets/images/profile/star.svg')}
+                            description='Pejuang Eco'
                         />
                         <BadgeCard
-                            image='@/assets/images/profile.png'
+                            image={require('@/assets/images/profile/camera.svg')}
                             description='Pro Scanner'
                         />
                         <BadgeCard
-                            image='@/assets/images/profile.png'
+                            image={require('@/assets/images/profile/daun.svg')}
                             description='Hemat Energi'
                         />
                         <BadgeCard
-                            image='@/assets/images/profile.png'
+                            image={require('@/assets/images/profile/recycle.svg')}
                             description='Reuse Warrior'
                         />
                     </View>
@@ -94,16 +100,19 @@ export default function ProfilePage() {
 
                 {/* Buttons */}
                 {/* onPress tiap button belum dihandle */}
-                <View style={{
-                    flexDirection: 'column',
-                    backgroundColor: 'white',
-                    borderRadius: 12,
-                    }}>
+                <View className="flex flex-col bg-white rounded-xl">
                     <TouchableOpacity
                         onPress={() => {}}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Target Karbon</ThemedText>
+                        <View className='flex-row items-center'>
+                            <Image
+                                source={require('@/assets/images/profile/tagetkarbon.svg')}
+                                style={{ width: 16, height: 16, marginRight: 8, tintColor: 'black' }}
+                                contentFit="contain"
+                            />
+                            <Text className="text-[14px] font-poppins-medium text-[#323232]">Target Karbon</Text>
+                        </View>
                     </TouchableOpacity>
                     <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
 
@@ -111,7 +120,14 @@ export default function ProfilePage() {
                         onPress={() => {}}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Pengaturan</ThemedText>
+                        <View className='flex-row items-center'>
+                            <Image
+                                source={require('@/assets/images/profile/settings.svg')}
+                                style={{ width: 16, height: 16, marginRight: 8, tintColor: 'black' }}
+                                contentFit="contain"
+                            />
+                            <Text className="text-[14px] font-poppins-medium text-[#323232]">Pengaturan</Text>
+                        </View>                    
                     </TouchableOpacity>
                     <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
 
@@ -119,7 +135,14 @@ export default function ProfilePage() {
                         onPress={() => {}}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Bantuan & FAQ</ThemedText>
+                        <View className='flex-row items-center'>
+                            <Image
+                                source={require('@/assets/images/profile/faq.svg')}
+                                style={{ width: 16, height: 16, marginRight: 8, tintColor: 'black' }}
+                                contentFit="contain"
+                            />
+                            <Text className="text-[14px] font-poppins-medium text-[#323232]">Bantuan & FAQ</Text>
+                        </View>                    
                     </TouchableOpacity>
                     <View style={{ height: 1, backgroundColor: '#e0e0e0', marginLeft: 0 }} />
 
@@ -127,7 +150,14 @@ export default function ProfilePage() {
                         onPress={() => handleLogout()}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
                     >
-                        <ThemedText style={{ fontSize: 16, color: '#333' }}>Keluar</ThemedText>
+                        <View className='flex-row items-center'>
+                            <Image
+                                source={require('@/assets/images/profile/logout.svg')}
+                                style={{ width: 16, height: 16, marginRight: 8, tintColor: 'black' }}
+                                contentFit="contain"
+                            />
+                            <Text className="text-[14px] font-poppins-medium text-[#323232]">Keluar</Text>
+                        </View>
                     </TouchableOpacity>
                 </View>
 

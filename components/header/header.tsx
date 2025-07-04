@@ -97,7 +97,7 @@ export default function Header({ title, prevPage, isOnDashboard }: HeaderProps) 
 
                         {/* @TODO: UBAH KE PAGE PROFILE */}
                         <TouchableOpacity
-                            onPress={handleLogout}
+                            onPress={() => {router.replace('/(profile)/profile');}}
                         >
                             <Image
                                 source={require('@/assets/images/profile.png')}

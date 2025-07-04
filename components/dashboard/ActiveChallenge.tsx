@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { Image } from 'expo-image';
 
 interface ActiveChallengeProps {
   imageSource: string,
@@ -21,23 +22,23 @@ export function ActiveChallenge({
   return (
     <View className="flex-row items-center bg-white rounded-2xl p-4 shadow mt-2">
       {/* Icon */}
-      {/* <View className="w-12 h-12 rounded-full bg-[#F5F5F5] justify-center items-center mr-4">
-        <Image
-          source={imageSource}
-          className="w-8 h-8"
-          resizeMode="contain"
-        />
-      </View> */}
+      <View className="w-12 h-12 rounded-full bg-[#F5F5F5] justify-center items-center mr-4">
+      <Image
+        source={imageSource}
+        style={{ width: 40, height: 40 }}
+        contentFit="contain"
+      />
+      </View>
 
       {/* Text Section */}
       <View className="flex-1">
-        <Text className="font-bold text-base">
+        <Text className="font-poppins-medium text-[12px] text-black">
           {title}
         </Text>
-        <Text className="text-sm mt-1 text-gray-600">
+        <Text className="font-poppins text-[11px] text-black">
           {description}
         </Text>
-        <Text className="text-green-700 text-sm mt-1">
+        <Text className="font-poppins text-[11px] text-[#2E5538]">
           {joinText}
         </Text>
       </View>

@@ -1,84 +1,121 @@
-import { ScrollView, Text, View } from 'react-native';
-
+import { ScrollView, Text, View, SafeAreaView } from 'react-native';
 // Components
 import { ActiveChallenge } from '@/components/dashboard/ActiveChallenge';
 import { CommunityComments } from '@/components/dashboard/CommunityComments';
 import ShareActionCard from '@/components/dashboard/ShareAction';
+import Header from '@/components/header/header';
+import Toast from 'react-native-toast-message';
 
 export default function Community() {
 
-
+    function handleShowToast() {
+        Toast.show({
+            type: 'success',
+            text1: 'Berhasil mengikuti tantangan',
+        });
+    }
+    const communityContents = [
+        {
+            name: 'Dinda',
+            images: require('@/assets/images/community/profile-picture/gojo.jpg'),
+            description: 'Minggu ke-3 bersepeda ke ITB selesai! Aku berhasil menghemat 23kg CO₂e dan menemukan kedai matcha di sepanjang rute.',
+            time: '2',
+            achievement: '23kg CO₂e berhasil dihemat minggu ini',
+            likes: 18,
+            comments: 3,
+        },
+        {
+            name: 'Radhi',
+            images: require('@/assets/images/community/profile-picture/nezuko.jpg'),
+            description: 'Hari ini ga ke mana-mana, nonton anime seharian. Tanpa transportasi, tanpa AC besar, hanya kipas angin dan mie instan.',
+            time: '5',
+            achievement: '2.1 kg CO₂e berhasil dihemat hari ini',
+            likes: 34,
+            comments: 14,
+        },
+        {
+            name: 'Barru',
+            images: require('@/assets/images/community/profile-picture/sanji.jpg'),
+            description: 'Senangnya menjadi vegetarian~',
+            time: '24',
+            achievement: '492 kg CO₂e berhasil dihemat tahun ini',
+            likes: 5,
+            comments: 2,
+        },
+    ]
     return (
-        <View className='bg-[#FAF6E9]'>
-            <ScrollView className='flex p-4 px-8'>
-
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF6E9' }}>
+            <Header title="Komunitas" isOnDashboard={true} />
+            <ScrollView
+                contentContainerStyle={{ padding: 24, paddingBottom: 60 }}
+                showsVerticalScrollIndicator={false}
+            >
                 {/* Tantangan Aktif */}
-                <View className='flex flex-col mb-6'>
-                    <Text className='text-xl mb-3'>
+                <View style={{ marginBottom: 24 }}>
+                    <Text className='font-poppins-medium text-[20px] text-black'>
                         Tantangan Aktif
                     </Text>
-                    <View className=''>
-                        <ActiveChallenge
-                            imageSource=''
-                            title='Pekan Bersepeda ke Kantor'
-                            description='Bersepeda ke tempat kerja setiap hari minggu ini'
-                            joinText='1247 telah bergabung'
-                            buttonText='Ikuti'
-                            onPress={() => {}}
-                        />
-                        <ActiveChallenge
-                            imageSource=''
-                            title='Senin Tanpa Daging'
-                            description='Tidak makan daging setiap hari Senin bulan ini'
-                            joinText='892 telah bergabung'
-                            buttonText='Ikuti'
-                            onPress={() => {}}
-                        />
-                    </View>
+                    <ActiveChallenge
+                        imageSource={require('@/assets/images/community/sepeda.svg')}
+                        title='Pekan Bersepeda ke Kantor'
+                        description='Bersepeda ke tempat kerja setiap hari minggu ini'
+                        joinText='1247 telah bergabung'
+                        buttonText='Ikuti'
+                        onPress={() => {handleShowToast()}}
+                    />
+                    <ActiveChallenge
+                        imageSource={require('@/assets/images/community/tanpadaging.svg')}
+                        title='Senin Tanpa Daging'
+                        description='Tidak makan daging setiap hari Senin bulan ini'
+                        joinText='892 telah bergabung'
+                        buttonText='Ikuti'
+                        onPress={() => {handleShowToast()}}
+
+                    />
                 </View>
 
+                {/* Cerita Komunitas */}
                 <View>
-                    <Text className='text-xl mb-3'>
+                    <Text className="font-poppins-medium text-[20px] text-black">
                         Cerita Komunitas
                     </Text>
+
                     <ShareActionCard
-                        onPressLink={() => {}}
-                        onPressImage={() => {}}
-                        onPressSend={() => {}}
+                        onPressLink={() => { }}
+                        onPressImage={() => { }}
+                        onPressSend={() => { }}
                     />
-                    <View className='mt-4'>
-                        <CommunityComments
-                            items={[
-                            { 
-                                name: 'Dinda', 
-                                description: 'Minggu ke-3 bersepeda ke ITB selesai! Aku berhasil menghemat 23kg CO₂e dan menemukan kedai matcha di sepanjang rute.', 
-                                time: '2 jam yang lalu',
-                                achievement: '23kg CO₂e berhasil dihemat minggu ini',
-                                likes: 18,
-                                comments: 3,
-                            },
-                            { 
-                                name: 'Radhi', 
-                                description: 'Hari ini ga ke mana-mana, nonton anime seharian. Tanpa transportasi, tanpa AC besar, hanya kipas angin dan mie instan.', 
-                                time: '5 jam yang lalu',
-                                achievement: '2.1 kg CO₂e berhasil dihemat hari ini',
-                                likes: 34,
-                                comments: 14,
-                            },
-                            {
-                                name: 'Barru', 
-                                description: 'Senangnya menjadi vegetarian~', 
-                                time: '1 hari yang lalu',
-                                achievement: '492 kg CO₂e berhasil dihemat tahun ini',
-                                likes: 5,
-                                comments: 2,
-                            },
-                        ]}
-                        />
+
+                    <View
+                        className="mt-12 rounded-[10px] bg-white"
+                        style={{
+                            shadowColor: '#000',
+                            shadowOffset: { width: 0, height: 2 },
+                            shadowOpacity: 0.15,
+                            shadowRadius: 6,
+                            elevation: 6,
+                        }}
+                    >
+                        {communityContents.map((content, idx) => (
+                            <View key={idx}>
+                                <CommunityComments
+                                    name={content.name}
+                                    images={content.images}
+                                    description={content.description}
+                                    time={content.time}
+                                    achievement={content.achievement}
+                                    likes={content.likes}
+                                    comments={content.comments}
+                                />
+                                {idx < communityContents.length - 1 && (
+                                    <View className="h-[1px] bg-[#D7D7D7] mx-3" />
+                                )}
+                            </View>
+                        ))}
                     </View>
                 </View>
 
             </ScrollView>
-        </View>
-    )
+        </SafeAreaView>
+    );
 }
