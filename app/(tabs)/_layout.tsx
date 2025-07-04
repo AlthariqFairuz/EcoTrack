@@ -17,9 +17,10 @@ export default function TabLayout() {
         top: -25,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 70,
-        height: 70,
-        marginBottom: 20,
+        alignSelf: 'center',
+        // width: 70,
+        // height: 70,
+        marginBottom: 10,
       }}>
         <TouchableOpacity
           style={{
