@@ -263,7 +263,7 @@ const Scanner = () => {
   if (!permission) {
     return (
       <View className="flex-1 bg-orange-50">
-        <Header title='AI Scanner' isOnDashboard={true}/>
+        <Header title='AI Scanner' isOnDashboard={false}/>
         <View className="flex-1 justify-center items-center">
           <Text className="font-poppins text-gray-600">Meminta izin kamera...</Text>
         </View>
@@ -274,7 +274,7 @@ const Scanner = () => {
   if (!permission.granted) {
     return (
       <View className="flex-1 bg-orange-50">
-        <Header title='AI Scanner' isOnDashboard={true}/>
+        <Header title='AI Scanner' isOnDashboard={false}/>
         <View className="flex-1 justify-center items-center p-8">
           <Ionicons name="camera-outline" size={64} color="#9CA3AF" />
           <Text className="font-poppins-semibold text-lg text-gray-800 mt-4 mb-2 text-center">
@@ -298,7 +298,7 @@ const Scanner = () => {
 
   return (
     <View className="flex-1 bg-orange-50">
-      <Header title='AI Scanner' isOnDashboard={true}/>
+      <Header title='AI Scanner' isOnDashboard={false}/>
       
       <View className="flex-1 p-4">
         {/* Camera Preview */}

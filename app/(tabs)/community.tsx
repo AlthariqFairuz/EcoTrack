@@ -38,14 +38,14 @@ export default function Community() {
             images: require('@/assets/images/community/profile-picture/sanji.jpg'),
             description: 'Senangnya menjadi vegetarian~',
             time: '24',
-            achievement: '492 kg CO₂e berhasil dihemat tahun ini',
+            achievement: '492 kg CO₂e berhasil dihemaset tahun ini',
             likes: 5,
             comments: 2,
         },
     ]
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF6E9' }}>
-            <Header title="Komunitas" isOnDashboard={true} />
+            <Header title="Komunitas" isOnDashboard={false} />
             <ScrollView
                 contentContainerStyle={{ padding: 24, paddingBottom: 60 }}
                 showsVerticalScrollIndicator={false}

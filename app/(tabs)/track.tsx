@@ -241,7 +241,7 @@ export default function Track() {
 
   return (
     <View className="flex-1 bg-orange-50">
-      <Header title="Track Aktivitas" isOnDashboard={true} />
+      <Header title="Track Aktivitas" isOnDashboard={false} />
 
       <ScrollView className="flex-1 p-4">
         <Text className="font-poppins-medium text-[20px] text-black">Tambah Cepat</Text>

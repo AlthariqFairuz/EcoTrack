@@ -11,6 +11,7 @@ import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
 import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { NotificationBadge } from '@/components/notification/NotificationBadge';
+import Header from '@/components/header/header';
 
 export default function DashboardScreen() {
   
@@ -86,34 +87,7 @@ export default function DashboardScreen() {
   return (
     <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
-      <LinearGradient
-        colors={['#537D5D', '#537D5D']}
-        className="pt-12 pb-5 px-5"
-      >
-        <View className="flex-row justify-between items-center">
-          <View className="flex-row items-center">
-            <MaterialIcons name="location-on" size={16} color="white" />
-            <Text className="text-white text-sm font-poppins ml-1">
-              Jakarta, Indonesia
-            </Text>
-          </View>
-          <View className="flex-row space-x-3">
-            <TouchableOpacity 
-              className="w-9 h-9 rounded-full bg-white/20 justify-center items-center relative"
-              onPress={openNotifications}
-            >
-              <Ionicons name="notifications-outline" size={20} color="white" />
-              <NotificationBadge count={unreadCount} size="small" />
-            </TouchableOpacity>
-            <TouchableOpacity 
-              className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
-              onPress={handleLogout}
-            >
-              <FontAwesome5 name="user-circle" size={20} color="white" />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </LinearGradient>
+      <Header title ="Dashboard" isOnDashboard={true} />
 
       <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
