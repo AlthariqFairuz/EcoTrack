@@ -1,4 +1,4 @@
-import { View, TouchableOpacity } from 'react-native';
+import { View, TouchableOpacity, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -10,11 +10,11 @@ import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
 import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NotificationBadge } from '@/components/notification/NotificationBadge';
 import Header from '@/components/header/header';
-import PageWrapper from '@/components/PageWrapper';
 
 export default function DashboardScreen() {
+  
   const [userData, setUserData] = useState<UserData>({
     dailyEmissions: 6.2,
     location: 'Jakarta, Indonesia',
@@ -22,6 +22,8 @@ export default function DashboardScreen() {
     transportMode: 'car',
     dietType: 'mixed'
   });
+  
+  const [unreadCount, setUnreadCount] = useState<number>(4);
 
   const userName = "Adinda";
   const dailyTarget = "< 8.5 kg CO₂e";
@@ -44,8 +46,6 @@ export default function DashboardScreen() {
   useEffect(() => {
     loadUserPreferences();
   }, []);
-
-  const insets = useSafeAreaInsets();
 
   const loadUserPreferences = async () => {
     try {
@@ -80,11 +80,16 @@ export default function DashboardScreen() {
     router.push('/chatbot');
   };
 
+  const openNotifications = () => {
+    router.push('/notification');
+  };
+
   return (
     <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
-        <Header title="Jakarta, Indonesia" isOnDashboard={true} />
-      <PageWrapper className="px-4 pt-8">
+      <Header title ="Dashboard" isOnDashboard={true} />
+
+      <ScrollView className="flex-1 p-5" showsVerticalScrollIndicator={false}>
         {/* Greeting Card */}
         <GreetingCard
           userName={userName}
@@ -110,24 +115,24 @@ export default function DashboardScreen() {
           totalSaved={156}
           ranking={23}
         />
-      </PageWrapper>
+      </ScrollView>
 
-    <TouchableOpacity 
-      className="absolute right-5 w-14 h-14 rounded-full items-center justify-center"
-      style={{ 
-        bottom: insets.bottom + 80,
-        backgroundColor: '#537D5D',
-        elevation: 8,
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 8,
-      }}
-      onPress={openChatbot}
-      activeOpacity={0.8}
-    >
-      <Ionicons name="chatbubble-outline" size={24} color="white" />
-    </TouchableOpacity>
+      {/* Floating Chat Button */}
+      <TouchableOpacity 
+        className="absolute bottom-20 right-5 w-14 h-14 rounded-full items-center justify-center"
+        style={{ 
+          backgroundColor: '#537D5D',
+          elevation: 8,
+          shadowColor: '#000000',
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+        }}
+        onPress={openChatbot}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="chatbubble-outline" size={24} color="white" />
+      </TouchableOpacity>
     </View>
   );
 }
