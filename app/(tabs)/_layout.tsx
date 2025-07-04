@@ -1,12 +1,12 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform, View, TouchableOpacity, Text } from 'react-native';
 import { HapticTab } from '@/components/HapticTab';
-import Feather from '@expo/vector-icons/Feather';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import Feather from '@expo/vector-icons/Feather';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import { Tabs } from 'expo-router';
+import React from 'react';
+import { Platform, Text, TouchableOpacity, View } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -17,9 +17,10 @@ export default function TabLayout() {
         top: -25,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 70,
-        height: 70,
-        marginBottom: 20,
+        alignSelf: 'center',
+        // width: 70,
+        // height: 70,
+        marginBottom: 10,
       }}>
         <TouchableOpacity
           style={{
@@ -71,7 +72,7 @@ export default function TabLayout() {
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: {
-          height: 80,
+          height: 90,
           paddingBottom: Platform.OS === 'ios' ? 20 : 10,
           paddingTop: 10,
           backgroundColor: 'white',

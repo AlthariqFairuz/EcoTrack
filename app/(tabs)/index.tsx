@@ -1,14 +1,18 @@
-import { View, TouchableOpacity, ScrollView } from 'react-native';
+import { View, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import { useState, useEffect } from 'react';
-import { ThemedText } from '@/components/ThemedText';
+import { Text } from 'react-native';
 import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
+import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Header from '@/components/header/header';
+import PageWrapper from '@/components/PageWrapper';
 
 export default function DashboardScreen() {
   const [userData, setUserData] = useState<UserData>({
@@ -41,14 +45,14 @@ export default function DashboardScreen() {
     loadUserPreferences();
   }, []);
 
+  const insets = useSafeAreaInsets();
+
   const loadUserPreferences = async () => {
     try {
       const storedName = await AsyncStorage.getItem('userName');
       if (storedName) {
-        // Update user data berdasarkan stored preferences
         setUserData(prev => ({
           ...prev,
-          // Bisa ditambahkan logic untuk load preferences dari AsyncStorage
         }));
       }
     } catch (error) {
@@ -72,30 +76,15 @@ export default function DashboardScreen() {
     }, 1000);
   };
 
-  return (
-    <View className="flex-1 bg-orange-50">
-      {/* Header */}
-      <LinearGradient
-        colors={['#22c55e', '#16a34a']}
-        className="pt-12 pb-5 px-5"
-      >
-        <View className="flex-row justify-between items-center">
-          <View className="flex-row items-center">
-            <ThemedText className="text-base mr-2">📍</ThemedText>
-            <ThemedText className="text-white text-sm font-medium">
-              Jakarta, Indonesia
-            </ThemedText>
-          </View>
-          <TouchableOpacity 
-            className="w-9 h-9 rounded-full bg-white/20 justify-center items-center"
-            onPress={handleLogout}
-          >
-            <ThemedText className="text-lg">😊</ThemedText>
-          </TouchableOpacity>
-        </View>
-      </LinearGradient>
+  const openChatbot = () => {
+    router.push('/chatbot');
+  };
 
-      <ScrollView className="flex-1 p-5">
+  return (
+    <View className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
+      {/* Header */}
+        <Header title="Jakarta, Indonesia" isOnDashboard={true} />
+      <PageWrapper className="px-4 pt-8">
         {/* Greeting Card */}
         <GreetingCard
           userName={userName}
@@ -108,9 +97,9 @@ export default function DashboardScreen() {
 
         {/* AI Recommendations */}
         <View className="mb-5">
-          <ThemedText className="text-lg font-bold text-gray-800 mb-4">
+          <Text className="text-lg font-poppins-bold text-gray-800 mb-4">
             Rekomendasi AI
-          </ThemedText>
+          </Text>
           <AIRecommendations userData={userData} />
         </View>
 
@@ -121,15 +110,24 @@ export default function DashboardScreen() {
           totalSaved={156}
           ranking={23}
         />
-      </ScrollView>
+      </PageWrapper>
 
-      {/* Floating Chat Button */}
-      <TouchableOpacity 
-        className="absolute bottom-20 right-5 w-14 h-14 bg-green-600 rounded-full items-center justify-center shadow-lg"
-        style={{ elevation: 8 }}
-      >
-        <ThemedText className="text-white text-xl">💬</ThemedText>
-      </TouchableOpacity>
+    <TouchableOpacity 
+      className="absolute right-5 w-14 h-14 rounded-full items-center justify-center"
+      style={{ 
+        bottom: insets.bottom + 80,
+        backgroundColor: '#537D5D',
+        elevation: 8,
+        shadowColor: '#000000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 8,
+      }}
+      onPress={openChatbot}
+      activeOpacity={0.8}
+    >
+      <Ionicons name="chatbubble-outline" size={24} color="white" />
+    </TouchableOpacity>
     </View>
   );
 }

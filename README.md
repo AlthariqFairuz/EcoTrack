@@ -12,6 +12,22 @@
    npm run android
    ```
 
+3. To run model (make sure uvicorn is installed (recommended))
+   ```bash
+   cd model/
+   uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+   ```
+
+   or 
+
+   ```bash
+   cd model/
+   python main.py
+   ```
+Docs for model:
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
+
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)

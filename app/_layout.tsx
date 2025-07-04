@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import 'react-native-reanimated';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import '../global.css';
 
@@ -39,7 +40,7 @@ export default function RootLayout() {
   }
 
   return (
-    <>
+    <SafeAreaProvider>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="(splash)" />
@@ -52,6 +53,6 @@ export default function RootLayout() {
         <StatusBar style="auto" />
       </ThemeProvider>
       <Toast />
-    </>
+    </SafeAreaProvider>
   );
 }
