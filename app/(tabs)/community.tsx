@@ -45,7 +45,7 @@ export default function Community() {
     ]
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FAF6E9' }}>
-            <Header title="Komunitas" isOnDashboard={false} />
+            <Header title="Komunitas" isOnDashboard={true} />
             <ScrollView
                 contentContainerStyle={{ padding: 24, paddingBottom: 60 }}
                 showsVerticalScrollIndicator={false}
