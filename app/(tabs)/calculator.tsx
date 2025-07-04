@@ -231,7 +231,7 @@ const recyclingOptions = [
 ];
 
   return (
-    <ThemedView className="flex-1" style={{ backgroundColor: '#FAF3DA' }}>
+    <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
       <Header title='Kalkulator Karbon' isOnDashboard={true}/>
 
