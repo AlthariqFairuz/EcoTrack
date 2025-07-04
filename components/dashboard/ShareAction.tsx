@@ -31,14 +31,14 @@ function ShareActionCard({
         <View className="flex-row space-x-4">
           <TouchableOpacity onPress={onPressLink}>
             <Image
-              source={require('../../assets/images/profile.png')} 
-              className="w-6 h-6"
+              source={require('../../assets/images/link.png')} 
+              style={{ width: 16, height: 16, marginRight: 16 }}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={onPressImage}>
             <Image
-              source={require('../../assets/images/profile.png')} 
-              className="w-6 h-6"
+              source={require('../../assets/images/iamge.png')} 
+              style={{ width: 16, height: 16 }}
             />
           </TouchableOpacity>
         </View>
@@ -47,8 +47,8 @@ function ShareActionCard({
           onPress={onPressSend}
         >
           <Image
-            source={require('../../assets/images/profile.png')} 
-            className="w-5 h-5"
+            source={require('../../assets/images/share.png')} 
+            style={{ width: 18, height: 18 }}
           />
         </TouchableOpacity>
       </View>
