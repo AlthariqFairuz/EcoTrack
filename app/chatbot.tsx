@@ -10,10 +10,10 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
-import { Image } from 'expo-image';
+import Header from '@/components/header/header';
+import { ThemedView } from '@/components/ThemedView';
 
 interface Message {
   id: string;
@@ -222,37 +222,9 @@ Gaya komunikasi:
   };
 
   return (
-    <SafeAreaView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
+    <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
-      <View className="bg-white px-4 py-3 flex-row items-center justify-between" style={{
-        shadowColor: '#000000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.1,
-        shadowRadius: 3,
-        elevation: 3,
-      }}>
-        <View className="flex-row items-center flex-1">
-          <TouchableOpacity 
-            onPress={() => router.back()}
-            className="mr-3"
-          >
-            <Ionicons name="arrow-back" size={24} color="#374151" />
-          </TouchableOpacity>
-          
-          <View className="w-10 h-10 rounded-full items-center justify-center mr-3" style={{ backgroundColor: '#537D5D' }}>
-            <MaterialIcons name="eco" size={20} color="white" />
-          </View>
-          
-          <View className="flex-1">
-            <Text className="font-poppins-semibold text-gray-800 text-base">EcoBot</Text>
-            <Text className="font-poppins text-gray-500 text-xs">Asisten AI EcoTrack</Text>
-          </View>
-        </View>
-        
-        <TouchableOpacity onPress={clearChat}>
-          <MaterialIcons name="delete-outline" size={24} color="#6b7280" />
-        </TouchableOpacity>
-      </View>
+      <Header title="EcoBot" isOnDashboard={false} />
 
       {/* Messages */}
       <ScrollView
@@ -342,7 +314,7 @@ Gaya komunikasi:
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
-        <View className="-bottom-8 bg-white px-4 py-4" style={{
+        <View className="bottom-0 bg-white px-4 py-4" style={{
           paddingBottom: Platform.OS === 'ios' ? 34 : 20,
         }}>
           <View className="flex-row items-end">
@@ -390,6 +362,6 @@ Gaya komunikasi:
           )}
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </ThemedView>
   );
 }
