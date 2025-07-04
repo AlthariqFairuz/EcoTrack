@@ -2,7 +2,8 @@ import Header from '@/components/header/header';
 import { ThemedView } from '@/components/ThemedView';
 import { Image } from 'expo-image';
 import React, { useState } from 'react';
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import PageWrapper from '@/components/PageWrapper';
 import { Dropdown } from 'react-native-element-dropdown';
 import Toast from 'react-native-toast-message';
 
@@ -234,7 +235,7 @@ const recyclingOptions = [
       {/* Header */}
       <Header title='Kalkulator Karbon' isOnDashboard={true}/>
 
-      <ScrollView className="flex-1 px-4 pt-8" showsVerticalScrollIndicator={false}>
+      <PageWrapper className="px-4 pt-8">
         {/* Info Card */}
         <View className="bg-[#FFFFFF] rounded-xl p-4 flex-row" style={{
             shadowColor: '#000000',
@@ -903,7 +904,7 @@ const recyclingOptions = [
           </View>
         </View>
 )}
-      </ScrollView>
+    </PageWrapper>
     </ThemedView>
   );
 }
