@@ -111,7 +111,7 @@ export default function Header({
             {/* @TODO: UBAH KE PAGE PROFILE */}
             <TouchableOpacity
               onPress={() => {
-                router.replace("/");
+                router.replace("/profile");
               }}
             >
               <Image
