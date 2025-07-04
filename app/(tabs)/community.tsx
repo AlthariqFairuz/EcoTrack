@@ -16,15 +16,6 @@ export default function Community() {
     }
     const communityContents = [
         {
-            name: 'Radhi',
-            images: require('@/assets/images/community/profile-picture/gojo.jpg'),
-            description: 'Minggu ke-3 bersepeda ke ITB selesai! Aku berhasil menghemat 23kg CO₂e dan menemukan kedai matcha di sepanjang rute.',
-            time: '2',
-            achievement: '23kg CO₂e berhasil dihemat minggu ini',
-            likes: 18,
-            comments: 3,
-        },
-        {
             name: 'Putri',
             images: require('@/assets/images/community/profile-picture/nezuko.jpg'),
             description: 'Hari ini ga ke mana-mana, nonton anime seharian. Tanpa transportasi, tanpa AC besar, hanya kipas angin dan mie instan.',
@@ -32,6 +23,15 @@ export default function Community() {
             achievement: '2.1 kg CO₂e berhasil dihemat hari ini',
             likes: 34,
             comments: 14,
+        },
+        {
+            name: 'Radhi',
+            images: require('@/assets/images/community/profile-picture/gojo.jpg'),
+            description: 'Minggu ke-3 bersepeda ke ITB selesai! Aku berhasil menghemat 23kg CO₂e dan menemukan kedai matcha di sepanjang rute.',
+            time: '2',
+            achievement: '23kg CO₂e berhasil dihemat minggu ini',
+            likes: 18,
+            comments: 3,
         },
         {
             name: 'Barru',
