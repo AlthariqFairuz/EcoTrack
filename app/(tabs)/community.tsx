@@ -1,5 +1,4 @@
-import { ScrollView, Text, View, SafeAreaView } from 'react-native';
-// Components
+import {  Text, View } from 'react-native';
 import { ActiveChallenge } from '@/components/dashboard/ActiveChallenge';
 import { CommunityComments } from '@/components/dashboard/CommunityComments';
 import ShareActionCard from '@/components/dashboard/ShareAction';

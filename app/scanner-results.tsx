@@ -14,7 +14,6 @@ import Toast from 'react-native-toast-message';
 export default function ScannerResultsScreen() {
   const params = useLocalSearchParams();
   
-  // Parse the scan results from route parameters
   const scanResults = params.results ? JSON.parse(params.results as string) : null;
   
   if (!scanResults) {
@@ -47,7 +46,6 @@ export default function ScannerResultsScreen() {
       text2: 'Aktivitas tersimpan ke tracker',
     });
 
-    // Navigate to track screen
     router.replace('/(tabs)/track');
   };
 
