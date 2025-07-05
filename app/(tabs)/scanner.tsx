@@ -6,7 +6,6 @@ import React, { useRef, useState } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
-const OCR_BASE_URL = 'http://192.168.1.100:8001'; 
 
 const Scanner = () => {
   const [permission, requestPermission] = useCameraPermissions();
@@ -15,22 +14,18 @@ const Scanner = () => {
   const [isCapturing, setIsCapturing] = useState(false);
   const cameraRef = useRef<CameraView>(null);
 
-  // OCR Service Functions
-  const scanReceipt = async (imageUri: string) => {
+  const scanImage = async (imageUri: string) => {
     try {
       const formData = new FormData();
       formData.append('file', {
         uri: imageUri,
-        type: 'image/jpeg',
-        name: 'receipt.jpg',
+        type: 'image/jpeg/png',
+        name: 'scan.jpg',
       } as any);
 
-      const response = await fetch(`${OCR_BASE_URL}/scan-receipt`, {
+      const response = await fetch(`https://scanner-ocr-195352650485.asia-southeast2.run.app/scan-receipt`, {
         method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        body: formData
       });
 
       if (!response.ok) {
@@ -40,35 +35,7 @@ const Scanner = () => {
       return await response.json();
     } catch (error) {
       console.error('OCR Error:', error);
-      throw new Error(`OCR Error: ${error}`);
-    }
-  };
-
-  const scanFood = async (imageUri: string) => {
-    try {
-      const formData = new FormData();
-      formData.append('file', {
-        uri: imageUri,
-        type: 'image/jpeg',
-        name: 'food.jpg',
-      } as any);
-
-      const response = await fetch(`${OCR_BASE_URL}/scan-food`, {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      return await response.json();
-    } catch (error) {
-      console.error('Food scanning error:', error);
-      throw new Error(`Food scanning error: ${error}`);
+      throw new Error(`OCR scanning failed: ${error}`);
     }
   };
 
@@ -80,7 +47,7 @@ const Scanner = () => {
         ? `${ocrResult.items.slice(0, 2).map((i: any) => i.name).join(', ')}${ocrResult.items.length > 2 ? '...' : ''}`
         : 'Items dari scan',
       type: 'Belanja',
-      carbon: ocrResult.total_carbon_footprint || ocrResult.estimated_carbon_footprint || 0,
+      carbon: ocrResult.total_carbon_footprint || 0,
       details: ocrResult.items || []
     };
     
@@ -93,13 +60,13 @@ const Scanner = () => {
     });
   };
 
-  const processOCRResult = (result: any, scanType: string) => {
+  const processOCRResult = (result: any) => {
     if (result.success) {
-      const carbonValue = result.total_carbon_footprint || result.estimated_carbon_footprint || 0;
+      const carbonValue = result.total_carbon_footprint || 0;
       
       Toast.show({
         type: 'success',
-        text1: `Terdeteksi: ${result.detected_type || scanType}`,
+        text1: `Berhasil! Jenis: ${result.detected_type || 'Unknown'}`,
         text2: `Jejak karbon: ${carbonValue} kg CO₂e`,
       });
 
@@ -110,11 +77,9 @@ const Scanner = () => {
         alertMessage += result.items.slice(0, 3).map((item: any) => 
           `• ${item.name}: ${item.carbon_footprint || 'N/A'} kg CO₂e`
         ).join('\n');
-      } else if (result.detected_items) {
-        alertMessage += `Items terdeteksi: ${result.detected_items.length}\n\n`;
-        alertMessage += result.detected_items.slice(0, 3).map((item: any) => 
-          `• ${item.name} (${item.category})`
-        ).join('\n');
+        if (result.items.length > 3) {
+          alertMessage += `\n... dan ${result.items.length - 3} item lainnya`;
+        }
       }
 
       Alert.alert(
@@ -153,40 +118,16 @@ const Scanner = () => {
         });
 
         try {
-          // Try receipt scanning first
-          const receiptResult = await scanReceipt(photo.uri);
-          processOCRResult(receiptResult, 'receipt');
-        } catch (receiptError) {
-          console.log('Receipt scan failed, trying food scan...');
+          const result = await scanImage(photo.uri);
+          processOCRResult(result);
+        } catch (error) {
+          console.error('Scan failed:', error);
           
-          try {
-            // Fallback to food scanning
-            const foodResult = await scanFood(photo.uri);
-            processOCRResult(foodResult, 'food');
-          } catch (foodError) {
-            console.error('Both scans failed:', { receiptError, foodError });
-            
-            // Final fallback - mock result
-            Toast.show({
-              type: 'info',
-              text1: 'Mode Demo',
-              text2: 'Menampilkan hasil simulasi',
-            });
-            
-            const mockResult = {
-              success: true,
-              detected_type: 'Struk belanja (simulasi)',
-              items: [
-                { name: 'Daging sapi 500g', carbon_footprint: 2.75, category: 'meat' },
-                { name: 'Sayuran organik', carbon_footprint: 0.2, category: 'vegetables' },
-                { name: 'Kemasan plastik', carbon_footprint: 0.1, category: 'processed' }
-              ],
-              total_carbon_footprint: 3.05,
-              item_count: 3
-            };
-            
-            processOCRResult(mockResult, 'demo');
-          }
+          Toast.show({
+            type: 'error',
+            text1: 'Gagal memproses gambar',
+            text2: 'Pastikan gambar berisi struk atau makanan yang jelas',
+          });
         }
 
       } catch (error) {
@@ -219,21 +160,15 @@ const Scanner = () => {
         });
 
         try {
-          // Try receipt scanning first
-          const receiptResult = await scanReceipt(result.assets[0].uri);
-          processOCRResult(receiptResult, 'receipt');
-        } catch (receiptError) {
-          try {
-            // Fallback to food scanning
-            const foodResult = await scanFood(result.assets[0].uri);
-            processOCRResult(foodResult, 'food');
-          } catch (foodError) {
-            Toast.show({
-              type: 'error',
-              text1: 'Tidak dapat memproses',
-              text2: 'Pastikan foto berisi struk atau makanan yang jelas',
-            });
-          }
+          const scanResult = await scanImage(result.assets[0].uri);
+          processOCRResult(scanResult);
+        } catch (error) {
+          Toast.show({
+            type: 'error',
+            text1: 'Tidak dapat memproses',
+            text2: 'Pastikan foto berisi struk atau makanan yang jelas',
+          });
+          console.error('Gallery scan error:', error);
         }
       }
     } catch (error) {
@@ -242,7 +177,7 @@ const Scanner = () => {
         text1: 'Error',
         text2: 'Terjadi kesalahan saat memilih gambar',
       });
-      console.error('Gallery OCR error:', error);
+      console.error('Gallery error:', error);
     }
   };
 
@@ -302,7 +237,7 @@ const Scanner = () => {
       
       <View className="flex-1 p-4">
         {/* Camera Preview */}
-        <View className="flex-1 rounded-2xl overflow-hidden" style={{
+        <View className="flex-1 rounded-2xl overflow-hidden mb-8" style={{
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 4 },
           shadowOpacity: 0.3,
@@ -397,7 +332,7 @@ const Scanner = () => {
                 onPress={() => {
                   Alert.alert(
                     'AI Scanner',
-                    'Teknologi AI dapat mendeteksi:\n• Struk belanja\n• Makanan dan minuman\n• Kendaraan\n• Produk kemasan\n\nDan menghitung jejak karbonnya secara otomatis!\n\nCatatan: Pastikan server OCR berjalan di ' + OCR_BASE_URL
+                    'Teknologi AI dapat mendeteksi:\n• Struk belanja\n• Makanan dan minuman\n• Kendaraan\n• Produk kemasan\n\nDan menghitung jejak karbonnya secara otomatis',
                   );
                 }}
               >
@@ -407,24 +342,6 @@ const Scanner = () => {
           </CameraView>
         </View>
         
-        {/* Instructions */}
-        <View className="mt-4 p-4 bg-white rounded-xl" style={{
-          shadowColor: '#000000',
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.1,
-          shadowRadius: 4,
-          elevation: 2,
-        }}>
-          <Text className="font-poppins-semibold text-center text-gray-800 mb-2">
-            Tips Scanning
-          </Text>
-          <Text className="font-poppins text-sm text-gray-600 text-center">
-            • Pastikan objek dalam pencahayaan yang cukup{'\n'}
-            • Arahkan kamera dengan stabil{'\n'}
-            • AI akan otomatis menghitung jejak karbon{'\n'}
-            • Server: {OCR_BASE_URL}
-          </Text>
-        </View>
       </View>
     </View>
   );

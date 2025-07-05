@@ -1,8 +1,8 @@
 import requests
 
 # Test scan receipt
-with open('tc-ocr.jpg', 'rb') as f:
+with open('tc-ocr.png', 'rb') as f:
     files = {'file': f}
-    response = requests.post('http://localhost:8001/scan-receipt', files=files)
+    response = requests.post('https://scanner-ocr-195352650485.asia-southeast2.run.app/scan-receipt', files=files)
     print(response.json())
 
