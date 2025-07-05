@@ -19,7 +19,7 @@ const Scanner = () => {
       const formData = new FormData();
       formData.append('file', {
         uri: imageUri,
-        type: 'image/jpeg/png',
+        type: 'image/jpeg',
         name: 'scan.jpg',
       } as any);
 
@@ -332,7 +332,7 @@ const Scanner = () => {
                 onPress={() => {
                   Alert.alert(
                     'AI Scanner',
-                    'Teknologi AI dapat mendeteksi:\n• Struk belanja\n• Makanan dan minuman\n• Kendaraan\n• Produk kemasan\n\nDan menghitung jejak karbonnya secara otomatis',
+                    'Teknologi AI dapat mendeteksi:\n• Struk belanja\n• Makanan dan minuman\\n• Produk kemasan\n\nDan menghitung jejak karbonnya secara otomatis',
                   );
                 }}
               >
