@@ -1,20 +1,22 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { Image } from 'expo-image';
 
 interface ProgressCardProps {
-  icon: React.ReactNode;
+  image: string;
   title: string;
   description: string;
   badgeText: string;
   badgeColor: string;
-  achievedDate?: string; 
-  progress?: number; 
+  achievedDate?: string;
+  progress?: number;
   currentValue?: number;
   targetValue?: number;
+  isFinisihed?: boolean;
 }
 
 export function ProgressCard({
-  icon,
+  image,
   title,
   description,
   badgeText,
@@ -23,71 +25,56 @@ export function ProgressCard({
   progress = 0,
   currentValue = 0,
   targetValue = 0,
+  isFinisihed,
 }: ProgressCardProps) {
-  const isAchieved = !!achievedDate;
 
   return (
-    <View
-      style={{
-        backgroundColor: isAchieved ? '#C8E6A0' : 'white',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 16,
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowOffset: { width: 0, height: 2 },
-        shadowRadius: 4,
-        elevation: 2,
-        flexDirection: 'row',
-      }}
-    >
+    <View className={`flex-row rounded-2xl p-4 mb-4 items-center shadow-sm ${isFinisihed ? 'bg-[#C7E5A8]' : 'bg-white'}`}>
       {/* Icon */}
-      <View style={{ marginRight: 12 }}>{icon}</View>
+      <Image
+        source={image}
+        style={{ width: 40, height: 40 }}
+        contentFit="contain"
+      />
 
       {/* Content */}
-      <View style={{ flex: 1 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-          <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{title}</Text>
+      <View className="flex-1 ml-4">
+        <View className="flex-row justify-between items-center">
+          <Text className="font-poppins-medium text-[12px]">{title}</Text>
           <View
-            style={{
-              backgroundColor: badgeColor,
-              paddingHorizontal: 12,
-              paddingVertical: 4,
-              borderRadius: 12,
-            }}
+            style={{ backgroundColor: badgeColor }}
+            className="px-3 py-1 rounded-full"
           >
-            <Text style={{ fontWeight: '600' }}>{badgeText}</Text>
+            <Text className="font-poppins-medium text-[11px]">{badgeText}</Text>
           </View>
         </View>
 
-        <Text style={{ marginTop: 4 }}>{description}</Text>
+        <Text className="font-poppins text-[11px] mt-1">{description}</Text>
 
-        {isAchieved ? (
-          <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}>
-            <Text style={{ fontSize: 16, marginRight: 4 }}>✅</Text>
-            <Text style={{ color: '#333' }}>Diraih pada {achievedDate}</Text>
+        {isFinisihed ? (
+          <View className="flex-row items-center mt-2">
+            <Image
+              source={require('@/assets/images/profile/logout.svg')}
+              style={{ width: 16, height: 16, marginRight: 8, tintColor: 'black' }}
+              contentFit="contain"
+            />       
+           <Text className="font-poppins text-[11px] text-black">Diraih pada {achievedDate}</Text>
           </View>
         ) : (
           <>
-            <Text style={{ marginTop: 8, fontWeight: 'bold' }}>Proses</Text>
-            <Text style={{ alignSelf: 'flex-end', marginTop: 2 }}>
+          <View className='flex-row justify-between items-center mt-1'>
+            <Text className="font-poppins-medium text-[11px] mt-2">Proses</Text>
+            <Text className="font-poppins-medium text-[11px] self-end mt-0.5">
               {currentValue}/{targetValue}
             </Text>
-            <View
-              style={{
-                height: 12,
-                backgroundColor: '#EFE9DD',
-                borderRadius: 6,
-                overflow: 'hidden',
-                marginTop: 2,
-              }}
-            >
+          </View>
+            <View className="h-3 bg-neutral-200 rounded-full overflow-hidden mt-2">
               <View
                 style={{
-                  height: '100%',
                   width: `${progress * 100}%`,
-                  backgroundColor: '#3F6342',
+                  backgroundColor: '#2E5538',
                 }}
+                className="h-full"
               />
             </View>
           </>

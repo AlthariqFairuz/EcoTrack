@@ -48,7 +48,7 @@ export default function Community() {
     return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
       {/* Header */}
-      <Header title='Komunitas' isOnDashboard={false}/>
+      <Header title='Komunitas' isOnDashboard={true}/>
 
       <PageWrapper className="px-4 pt-8">
                 {/* Tantangan Aktif */}
