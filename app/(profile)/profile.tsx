@@ -105,7 +105,7 @@ export default function ProfilePage() {
 
                 {/* Buttons */}
                 {/* onPress tiap button belum dihandle */}
-                <View className="flex flex-col bg-white rounded-xl">
+                <View className="flex flex-col bg-white rounded-xl mb-20">
                     <TouchableOpacity
                         onPress={() => router.replace('/(profile)/target-karbon')}
                         style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20, paddingVertical: 16 }}
