@@ -1,9 +1,9 @@
 import Header from '@/components/header/header';
+import PageWrapper from '@/components/PageWrapper';
 import { ThemedView } from '@/components/ThemedView';
 import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import PageWrapper from '@/components/PageWrapper';
 import { Dropdown } from 'react-native-element-dropdown';
 import Toast from 'react-native-toast-message';
 
@@ -76,8 +76,8 @@ export default function Calculator() {
       how_many_new_clothes_monthly: clothingPurchases,
       how_long_internet_daily_hour: internetUsage,
       energy_efficiency: energyEfficiency,
-      recycling: recyclingType, 
-      cooking_with: cookingMethod
+      recycling: convertRecycling(recyclingType), 
+      cooking_with: convertCookingMethod(cookingMethod) 
     };
 
     console.log('Sending data:', requestData);
@@ -193,42 +193,86 @@ const wasteBagSizeOptions = [
 ];
 
 const cookingMethodOptions = [
-  { label: 'Tidak Ada Alat Masak', value: [] },
-  { label: 'Kompor', value: ['Stove'] },
-  { label: 'Oven', value: ['Oven'] },
-  { label: 'Microwave', value: ['Microwave'] },
-  { label: 'Kompor + Oven', value: ['Stove', 'Oven'] },
-  { label: 'Kompor + Microwave', value: ['Stove', 'Microwave'] },
-  { label: 'Oven + Microwave', value: ['Oven', 'Microwave'] },
-  { label: 'Grill + Airfryer', value: ['Grill', 'Airfryer'] },
-  { label: 'Microwave + Grill + Airfryer', value: ['Microwave', 'Grill', 'Airfryer'] },
-  { label: 'Kompor + Oven + Microwave', value: ['Stove', 'Oven', 'Microwave'] },
-  { label: 'Oven + Microwave + Grill + Airfryer', value: ['Oven', 'Microwave', 'Grill', 'Airfryer'] },
-  { label: 'Kompor + Grill + Airfryer', value: ['Stove', 'Grill', 'Airfryer'] },
-  { label: 'Oven + Grill + Airfryer', value: ['Oven', 'Grill', 'Airfryer'] },
-  { label: 'Kompor + Oven + Grill + Airfryer', value: ['Stove', 'Oven', 'Grill', 'Airfryer'] },
-  { label: 'Kompor + Microwave + Grill + Airfryer', value: ['Stove', 'Microwave', 'Grill', 'Airfryer'] },
-  { label: 'Lengkap (Semua Alat)', value: ['Stove', 'Oven', 'Microwave', 'Grill', 'Airfryer'] }
+  { label: 'Tidak Ada Alat Masak', value: 'none' },
+  { label: 'Kompor', value: 'stove' },
+  { label: 'Oven', value: 'oven' },
+  { label: 'Microwave', value: 'microwave' },
+  { label: 'Kompor + Oven', value: 'stove_oven' },
+  { label: 'Kompor + Microwave', value: 'stove_microwave' },
+  { label: 'Oven + Microwave', value: 'oven_microwave' },
+  { label: 'Grill + Airfryer', value: 'grill_airfryer' },
+  { label: 'Microwave + Grill + Airfryer', value: 'microwave_grill_airfryer' },
+  { label: 'Kompor + Oven + Microwave', value: 'stove_oven_microwave' },
+  { label: 'Oven + Microwave + Grill + Airfryer', value: 'oven_microwave_grill_airfryer' },
+  { label: 'Kompor + Grill + Airfryer', value: 'stove_grill_airfryer' },
+  { label: 'Oven + Grill + Airfryer', value: 'oven_grill_airfryer' },
+  { label: 'Kompor + Oven + Grill + Airfryer', value: 'stove_oven_grill_airfryer' },
+  { label: 'Kompor + Microwave + Grill + Airfryer', value: 'stove_microwave_grill_airfryer' },
+  { label: 'Lengkap (Semua Alat)', value: 'all' }
 ];
 
 const recyclingOptions = [
-  { label: 'Tidak Recycle', value: [] },
-  { label: 'Logam', value: ['Metal'] },
-  { label: 'Kertas', value: ['Paper'] },
-  { label: 'Kaca', value: ['Glass'] },
-  { label: 'Plastik', value: ['Plastic'] },
-  { label: 'Kertas + Plastik', value: ['Paper', 'Plastic'] },
-  { label: 'Kertas + Kaca', value: ['Paper', 'Glass'] },
-  { label: 'Kertas + Logam', value: ['Paper', 'Metal'] },
-  { label: 'Plastik + Kaca', value: ['Plastic', 'Glass'] },
-  { label: 'Plastik + Logam', value: ['Plastic', 'Metal'] },
-  { label: 'Kaca + Logam', value: ['Glass', 'Metal'] },
-  { label: 'Kertas + Plastik + Kaca', value: ['Paper', 'Plastic', 'Glass'] },
-  { label: 'Kertas + Plastik + Logam', value: ['Paper', 'Plastic', 'Metal'] },
-  { label: 'Kertas + Kaca + Logam', value: ['Paper', 'Glass', 'Metal'] },
-  { label: 'Plastik + Kaca + Logam', value: ['Plastic', 'Glass', 'Metal'] },
-  { label: 'Lengkap (Semua Jenis)', value: ['Paper', 'Plastic', 'Glass', 'Metal'] }
+  { label: 'Tidak Recycle', value: 'none' },
+  { label: 'Logam', value: 'metal' },
+  { label: 'Kertas', value: 'paper' },
+  { label: 'Kaca', value: 'glass' },
+  { label: 'Plastik', value: 'plastic' },
+  { label: 'Kertas + Plastik', value: 'paper_plastic' },
+  { label: 'Kertas + Kaca', value: 'paper_glass' },
+  { label: 'Kertas + Logam', value: 'paper_metal' },
+  { label: 'Plastik + Kaca', value: 'plastic_glass' },
+  { label: 'Plastik + Logam', value: 'plastic_metal' },
+  { label: 'Kaca + Logam', value: 'glass_metal' },
+  { label: 'Kertas + Plastik + Kaca', value: 'paper_plastic_glass' },
+  { label: 'Kertas + Plastik + Logam', value: 'paper_plastic_metal' },
+  { label: 'Kertas + Kaca + Logam', value: 'paper_glass_metal' },
+  { label: 'Plastik + Kaca + Logam', value: 'plastic_glass_metal' },
+  { label: 'Lengkap (Semua Jenis)', value: 'all' }
 ];
+
+const convertCookingMethod = (value: string): string[] => {
+  const mapping: Record<string, string[]> = {
+    'none': [],
+    'stove': ['Stove'],
+    'oven': ['Oven'],
+    'microwave': ['Microwave'],
+    'stove_oven': ['Stove', 'Oven'],
+    'stove_microwave': ['Stove', 'Microwave'],
+    'oven_microwave': ['Oven', 'Microwave'],
+    'grill_airfryer': ['Grill', 'Airfryer'],
+    'microwave_grill_airfryer': ['Microwave', 'Grill', 'Airfryer'],
+    'stove_oven_microwave': ['Stove', 'Oven', 'Microwave'],
+    'oven_microwave_grill_airfryer': ['Oven', 'Microwave', 'Grill', 'Airfryer'],
+    'stove_grill_airfryer': ['Stove', 'Grill', 'Airfryer'],
+    'oven_grill_airfryer': ['Oven', 'Grill', 'Airfryer'],
+    'stove_oven_grill_airfryer': ['Stove', 'Oven', 'Grill', 'Airfryer'],
+    'stove_microwave_grill_airfryer': ['Stove', 'Microwave', 'Grill', 'Airfryer'],
+    'all': ['Stove', 'Oven', 'Microwave', 'Grill', 'Airfryer']
+  };
+  return mapping[value] || [];
+};
+
+const convertRecycling = (value: string): string[] => {
+  const mapping: Record<string, string[]> = {
+    'none': [],
+    'metal': ['Metal'],
+    'paper': ['Paper'],
+    'glass': ['Glass'],
+    'plastic': ['Plastic'],
+    'paper_plastic': ['Paper', 'Plastic'],
+    'paper_glass': ['Paper', 'Glass'],
+    'paper_metal': ['Paper', 'Metal'],
+    'plastic_glass': ['Plastic', 'Glass'],
+    'plastic_metal': ['Plastic', 'Metal'],
+    'glass_metal': ['Glass', 'Metal'],
+    'paper_plastic_glass': ['Paper', 'Plastic', 'Glass'],
+    'paper_plastic_metal': ['Paper', 'Plastic', 'Metal'],
+    'paper_glass_metal': ['Paper', 'Glass', 'Metal'],
+    'plastic_glass_metal': ['Plastic', 'Glass', 'Metal'],
+    'all': ['Paper', 'Plastic', 'Glass', 'Metal']
+  };
+  return mapping[value] || [];
+};
 
   return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
@@ -878,31 +922,72 @@ const recyclingOptions = [
         </Text>
       </TouchableOpacity>
 
+      {/* Result Card */}
       {result && (
-        <View className="bg-white rounded-xl p-4 mx-2 mb-20" style={{
+      <View className="mx-2 mb-20">
+        {/* Title */}
+        <Text className="font-poppins-medium text-2xl text-left text-black mb-4">
+          Jejak Karbonmu
+        </Text>
+        
+        {/* Result Card */}
+        <View className="bg-white rounded-2xl p-6" style={{
           shadowColor: '#000000',
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.1,
           shadowRadius: 6,
           elevation: 3,
         }}>
-          <View className="items-center">
-            <Text className="font-poppins-bold text-lg text-gray-800 mb-2">
-              Hasil Perhitungan
-            </Text>
-            <Text className="font-poppins-bold text-3xl mb-2" style={{ color: '#537D5D' }}>
-              {result.predicted_carbon_emission} kg CO₂e
-            </Text>
-            <Text className="font-poppins text-sm text-gray-600 text-center">
-              {result.message}
-            </Text>
-            <View className="mt-4 p-3 bg-orange-50 rounded-lg">
-              <Text className="font-poppins-medium text-sm text-orange-800 text-center">
-                💡 Rata-rata emisi harian orang Indonesia: 8.5 kg CO₂e
+          <View className="flex-row items-center justify-between">
+            <View className="flex-1">
+              <Text className="font-poppins-semibold text-lg text-gray-800 mb-3">
+                Hasil Kalkulasi
               </Text>
+              
+              <View className="flex-row items-baseline mb-4">
+                <Text className="font-poppins-bold text-4xl text-black">
+                  {result.predicted_carbon_emission}
+                </Text>
+                <Text className="font-poppins-medium text-lg text-gray-600 ml-2">
+                  kg CO₂e
+                </Text>
+              </View>
+              
+              <TouchableOpacity 
+                className="bg-[#537D5D] py-3 px-6 rounded-2xl flex-row items-center justify-center"
+                onPress={() => {
+                  console.log('Share result'); //placeholder
+                }}
+              >
+                <Image
+                  source={require('@/assets/images/share-2.png')}
+                  style={{ width: 18, height: 18 , marginRight: 8 }}
+                  contentFit="contain"
+                />
+                <Text className="text-white font-poppins-semibold text-base mr-2">
+                  Bagikan
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
+            {/* Sapi Jempol */}
+            <View className="ml-16">
+              <Image
+                source={require('@/assets/images/sapi_jempol_1.png')}
+                style={{ width: 80, height: 120 }}
+                contentFit="contain"
+              />
             </View>
           </View>
+          
+          {/* Additional info */}
+          <View className="mt-4 p-3 bg-orange-50 rounded-lg">
+            <Text className="font-poppins-medium text-sm text-orange-800 text-center">
+              💡 Rata-rata emisi harian orang Indonesia: 8.5 kg CO₂e
+            </Text>
+          </View>
         </View>
+      </View>
 )}
     </PageWrapper>
     </ThemedView>
