@@ -2,6 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Image } from 'expo-image';
 import { MaterialIcons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 
 interface GreetingCardProps {
   userName: string;
@@ -29,6 +30,10 @@ export function GreetingCard({
     if (hour < 15) return 'Selamat siang'; 
     if (hour < 18) return 'Selamat sore';
     return 'Selamat malam';
+  };
+
+  const handleAnalisisPress = () => {
+    router.push('/(profile)/analisis');
   };
 
   return (
@@ -106,7 +111,11 @@ export function GreetingCard({
 
         {/* Center Button */}
         <View className="items-center">
-          <TouchableOpacity className="px-4 py-2 rounded-xl" style={{ backgroundColor: '#CEDD99' }}>
+          <TouchableOpacity 
+            className="px-4 py-2 rounded-xl" 
+            style={{ backgroundColor: '#CEDD99' }}
+            onPress={handleAnalisisPress}
+          >
             <View className="flex-row items-center">
               <MaterialIcons name="bar-chart" size={16} color="#2E5538" />
               <Text className="text-sm font-poppins ml-1" style={{ color: '#2E5538' }}>
