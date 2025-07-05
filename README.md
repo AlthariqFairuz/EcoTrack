@@ -46,7 +46,7 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 
 1. Clone repository
    ```bash
-   git clone https://github.com/your-username/your-project.git
+   git clone https://github.com/AlthariqFairuz/EcoTrack
    ```
 
 
