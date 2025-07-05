@@ -16,23 +16,23 @@ export function StatusCard({
     description
 }: StatusCardProps) {
     return (
-        <View className="bg-white rounded-xl p-3 mb-3 shadow-lg ml-4"
+        <View className="bg-white rounded-xl p-3 mb-3 shadow-lg mx-2"
             style={{ width: cardWidth }}
         >
-            <View className="flex-col">
+            <View className="flex-col items-center">
 
                 {/* Image */}
                 <Image
                     source={image}
-                    style={{ width: 20, height: 20 }}
+                    style={{ width: 40, height: 40 }}
                     contentFit="contain"
                 />
                 
-                <Text className="text-xl font-bold text-center">
+                <Text className="font-poppins-medium text-[14px] text-center">
                     {totalAch}
                 </Text>
 
-                <Text className="font-poppins-medium text-[12px] text-center">
+                <Text className="font-poppins text-[11px] text-center">
                     {description}
                 </Text>
             </View>

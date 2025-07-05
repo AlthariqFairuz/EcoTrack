@@ -73,9 +73,14 @@ export default function ProfilePage() {
                         <Text className='font-poppins-medium text-[16px] text-black mb-4 mt-4'>
                             Pencapaian Terbaru
                         </Text>
-                        <Text className='font-poppins-medium text-[12px] text-black mb-4 mt-4'>
-                            Lihat semua
-                        </Text>
+                        <TouchableOpacity
+                            onPress={() => router.replace('/(profile)/analisis')}
+                            className='flex flex-row items-center'
+                        >
+                            <Text className='font-poppins-medium text-[12px] text-black mb-4 mt-4'>
+                                Lihat semua
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                     <View className='flex flex-row flex-wrap justify-between'>
                         <BadgeCard
