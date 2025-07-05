@@ -1,6 +1,5 @@
 import { HapticTab } from '@/components/HapticTab';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { useColorScheme } from '@/hooks/useColorScheme';
 import Feather from '@expo/vector-icons/Feather';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -9,7 +8,6 @@ import React from 'react';
 import { Platform, Text, TouchableOpacity, View } from 'react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
  
   const CustomTabBarButton = ({ children, onPress, ...props }: any) => {
     return (

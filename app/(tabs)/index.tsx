@@ -1,16 +1,13 @@
-import { View, TouchableOpacity, ScrollView } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { View, TouchableOpacity, ScrollView, Text } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import { useState, useEffect } from 'react';
-import { Text } from 'react-native';
 import { AIRecommendations } from '@/components/dashboard/AIRecommendations';
 import { GreetingCard } from '@/components/dashboard/GreetingCard';
 import { WeeklyStats } from '@/components/dashboard/WeeklyStats';
 import { UserData } from '@/services/recommendationService';
-import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons';
-import { NotificationBadge } from '@/components/notification/NotificationBadge';
+import {  Ionicons } from '@expo/vector-icons';
 import Header from '@/components/header/header';
 
 export default function DashboardScreen() {

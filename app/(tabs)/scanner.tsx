@@ -2,6 +2,7 @@ import Header from '@/components/header/header';
 import { Ionicons } from '@expo/vector-icons';
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
+import { router } from 'expo-router';
 import React, { useRef, useState } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -39,27 +40,6 @@ const Scanner = () => {
     }
   };
 
-  const saveToTracker = (ocrResult: any) => {
-    const newActivity = {
-      name: `Belanja - ${ocrResult.item_count || 0} items`,
-      time: new Date(),
-      description: ocrResult.items 
-        ? `${ocrResult.items.slice(0, 2).map((i: any) => i.name).join(', ')}${ocrResult.items.length > 2 ? '...' : ''}`
-        : 'Items dari scan',
-      type: 'Belanja',
-      carbon: ocrResult.total_carbon_footprint || 0,
-      details: ocrResult.items || []
-    };
-    
-    console.log('Saving activity:', newActivity);
-    
-    Toast.show({
-      type: 'success',
-      text1: 'Data tersimpan!',
-      text2: 'Aktivitas berhasil ditambahkan ke tracker',
-    });
-  };
-
   const processOCRResult = (result: any) => {
     if (result.success) {
       const carbonValue = result.total_carbon_footprint || 0;
@@ -70,36 +50,13 @@ const Scanner = () => {
         text2: `Jejak karbon: ${carbonValue} kg CO₂e`,
       });
 
-      let alertMessage = `Total Jejak Karbon: ${carbonValue} kg CO₂e\n\n`;
-      
-      if (result.items && result.items.length > 0) {
-        alertMessage += `Items terdeteksi: ${result.item_count}\n\n`;
-        alertMessage += result.items.slice(0, 3).map((item: any) => 
-          `• ${item.name}: ${item.carbon_footprint || 'N/A'} kg CO₂e`
-        ).join('\n');
-        if (result.items.length > 3) {
-          alertMessage += `\n... dan ${result.items.length - 3} item lainnya`;
+      router.push({
+        pathname: '/scanner-results' as any,
+        params: {
+          results: JSON.stringify(result)
         }
-      }
-
-      Alert.alert(
-        'Hasil Scan',
-        alertMessage,
-        [
-          { text: 'OK' },
-          { 
-            text: 'Simpan ke Tracker', 
-            onPress: () => saveToTracker(result)
-          }
-        ]
-      );
-    } else {
-      Toast.show({
-        type: 'error',
-        text1: 'Tidak dapat mendeteksi',
-        text2: result.message || 'Coba foto yang lebih jelas',
-      });
-    }
+    });
+    } 
   };
 
   const takePicture = async () => {
