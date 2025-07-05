@@ -298,7 +298,7 @@ const Scanner = () => {
 
   return (
     <View className="flex-1 bg-orange-50">
-      <Header title='AI Scanner' isOnDashboard={false}/>
+      <Header title='AI Scanner' isOnDashboard={true}/>
       
       <View className="flex-1 p-4">
         {/* Camera Preview */}
