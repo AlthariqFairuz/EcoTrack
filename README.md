@@ -61,3 +61,12 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
    ```bash
    npm run android
    ```
+---
+
+## Our Team
+1. Adinda Putri
+2. Azfa Radhiyya Hakim
+3. Barru Adi Utomo
+4. Muhammad Al Thariq Fairuz
+5. Randy Verdian
+---
