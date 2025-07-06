@@ -8,7 +8,9 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 ---
 <br/>
 
-![UI](./assets/readme/Screen.png)
+<p align="center">
+   <img src="./assets/readme/Screen.png" alt="UI" />
+</p>
 
 ## Pemanfaatan AI
 
@@ -58,10 +60,16 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 
 3. Start the app
 
+- **Menggunakan Emulator Android:**
    ```bash
    npm run android
    ```
----
+
+- **Menggunakan Expo Go:**
+   ```bash
+   npx expo start
+   ```
+   Catatan: untuk menggunakan Expo Go, pastikan aplikasi Expo Go sudah terpasang di perangkat Anda dan perangkat berada dalam satu jaringan WiFi dengan komputer pengembang.
 
 ## Our Team
 1. Adinda Putri
