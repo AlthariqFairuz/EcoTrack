@@ -37,7 +37,7 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 - **Backend:** Django REST Framework
 - **Database:** PostgreSQL
 - **AI Engine:** EasyOCR, YOLOv8, TensorFlow
-- **Model Deployment:** Amazon SageMaker
+- **Model Deployment:** Google Cloud Run
 - **AI Chatbot:** OpenRouter (RAG-based)
 
 ---
