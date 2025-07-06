@@ -322,7 +322,7 @@ export default function AnalisisPage() {
 
   return (
     <ThemedView className="flex-1" style={{ backgroundColor: '#FAF6E9' }}>
-      <Header title="Analisis" prevPage="/(profile)/profile" isOnDashboard={false} />
+      <Header title="Analisis" prevPage="/(tabs)/" isOnDashboard={false} />
       
       <PageWrapper className="px-4 pt-4">
         {/* Header dengan periode */}
