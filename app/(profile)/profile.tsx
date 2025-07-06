@@ -42,11 +42,13 @@ export default function ProfilePage() {
                 {/* Achievements */}
                 <View className='flex-row items-center mb-2 mt-4 justify-center ml-4'>
                     <View className='flex mr-4'>
-                        <AchievementCard
-                            image={require('@/assets/images/profile/pencapaian.svg')}
-                            totalAch={10}
-                            description='Pencapaian'
-                        />
+                        <TouchableOpacity onPress={() => router.replace('/(profile)/penghargaan')}>
+                            <AchievementCard
+                                image={require('@/assets/images/profile/pencapaian.svg')}
+                                totalAch={10}
+                                description='Pencapaian'
+                            />
+                        </TouchableOpacity>
                         <AchievementCard
                             image={require('@/assets/images/profile/streak.svg')}
                             totalAch={7}
@@ -78,7 +80,7 @@ export default function ProfilePage() {
                             className='flex flex-row items-center'
                         >
                             <Text className='font-poppins-medium text-[12px] text-black mb-4 mt-4'>
-                                Lihat semua
+                                Lihat Analisis
                             </Text>
                         </TouchableOpacity>
                     </View>
