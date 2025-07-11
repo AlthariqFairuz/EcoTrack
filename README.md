@@ -47,7 +47,6 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 
 Dapat diakses pada link berikut [Backend](https://github.com/azfaradhi/EcoTrack-Backend) 
 
----
 <br/>
 
 ## How to Run
