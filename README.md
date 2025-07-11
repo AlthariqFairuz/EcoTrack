@@ -43,6 +43,13 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
 ---
 <br/>
 
+## Backend Repository
+
+Dapat diakses pada link berikut [Backend](https://github.com/azfaradhi/EcoTrack-Backend) 
+
+---
+<br/>
+
 ## How to Run
 
 
@@ -69,7 +76,9 @@ EcoTrack adalah aplikasi mobile yang memungkinkan pengguna untuk melacak, memaha
    ```bash
    npx expo start
    ```
-   Catatan: untuk menggunakan Expo Go, pastikan aplikasi Expo Go sudah terpasang di perangkat Anda dan perangkat berada dalam satu jaringan WiFi dengan komputer pengembang.
+   Untuk menggunakan Expo Go, pastikan aplikasi Expo Go sudah terpasang di perangkat Anda dan perangkat berada dalam satu jaringan WiFi dengan komputer pengembang.
+
+Catatan: Aplikasi ini berjalan sempurna pada android, namun butuh beberapa pengembangan lanjut pada ios.
 
 ## Our Team
 1. Adinda Putri
